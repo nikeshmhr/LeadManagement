@@ -1,0 +1,65 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.leadmngmt.model;
+
+/**
+ * This class contains the faculty information.
+ *
+ * @author Nikesh
+ */
+public class Faculty {
+
+    private int facultyId;
+    private String facultyName;
+
+    public static final int COMPUTING = 1, NETWORKING = 2, MULTIMEDIA = 3;
+
+    public Faculty() {
+        this(0);
+    }
+
+    public Faculty(int facultyId) {
+        this.facultyId = facultyId;
+
+        setFacultyName(facultyId);
+    }
+
+    private void setFacultyName(int facultyId) {
+        switch (facultyId) {
+            case COMPUTING:
+                setFacultyName("Computing");
+                break;
+
+            case NETWORKING:
+                setFacultyName("Networking");
+                break;
+
+            case MULTIMEDIA:
+                setFacultyName("Multimedia");
+                break;
+
+            default:
+                setFacultyName("");
+        }
+    }
+
+    public int getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(int facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
+    }
+
+}

@@ -1,0 +1,43 @@
+#container {
+	font-family: Century Gothic;
+	background: #d3d3d3;
+	height: 63%;
+}
+
+input {
+	height: 30px;
+	font-family: Century Gothic;
+	font-size: 15px;
+	margin: 10px;
+}
+
+input[type=text], [type=email], [type=number] {
+	width: 174px;
+}
+
+/*color for submit and clear button*/
+input[type=submit], [type=reset] {
+    width: 105px;
+    border: none;
+    background: blue;
+    color: white;
+    margin-right: 2px;
+    margin-left: 0px;
+    margin-top: 20px;
+    border-radius: 0px 0px 7px 7px;
+}
+
+/*Change of background and font color on hover for submit and clear button*/
+input[type=submit]:hover, [type=reset]:hover {
+    background: white;
+    color: black;
+}
+
+/*Formatting the select drop down menu in forms*/
+select {
+	font-family: Century Gothic;
+	font-size: 15px;
+	margin-top: 10px;
+	border: none;
+	height: 30px;
+}
