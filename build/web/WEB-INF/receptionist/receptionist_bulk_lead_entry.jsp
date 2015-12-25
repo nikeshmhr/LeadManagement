@@ -4,13 +4,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>LMS Reception</title>
-        <!--Importing bootstrap min.css framework-->
-        <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-        <!--Importing custom overwriting css named style.css-->
-        <link href="resources/css/style.css" rel="stylesheet">
-        <!-- Linking the favicon icon-image -->
-        <link rel="icon" type="image/png" href="resources/images/favicon.png">
 
+        <!-- Importing bootstrap framework jquery and javascrip from js/ -->
+        <script src="/LeadManagement/resources/js/jquery.min.js"></script>
+        <script src="/LeadManagement/resources/js/bootstrap.min.js"></script>
+
+        <!--Importing bootstrap min.css framework-->
+        <link href="/LeadManagement/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <!--Importing custom overwriting css named style.css-->
+        <link href="/LeadManagement/resources/css/style.css" rel="stylesheet" type="text/css">
+        <!-- Linking the favicon icon-image -->
+        <link rel="icon" type="image/png" href="/LeadManagement/resources/images/favicon.png" />        
 
         <!-- Internal css for image logo -->
         <style type="text/css">
@@ -50,11 +54,11 @@
 
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
-                    <li><a href="receptionist_single_lead_entry.jsp">Add New Lead Information</a></li>
+                    <li><a href="/LeadManagement/add">Add New Lead Information</a></li>
                     <li class="active"><a href="#">Add Information in Bulk</a></li>
                 </ul>
 
-                <div class="col-sm-6" class="pull-left" style="background:#d3d3d3; width:50%;">
+                <div class="col-sm-6 pull-left" style="background:#d3d3d3; width:50%;">
                     <form method="POST" action="#">
                         <table width="440px">
                             <label><h3>Bulk Information File Upload</h3></label>
@@ -77,7 +81,7 @@
             </div>
 
             <div class="pull-right" class="col-md-3">
-                <img src="images/logo.jpg" height="150px" width="160px">
+                <img src="/LeadManagement/resources/images/logo.jpg" height="150px" width="160px">
             </div>
 
 
@@ -85,8 +89,6 @@
             </div>
 
         </div>
-        <!-- Importing bootstrap framework jquery and javascrip from js/ -->
-        <script src="resources/js/jquery.min.js"></script>
-        <script src="resources/js/bootstrap.min.js"></script>
+
     </body>
 </html>

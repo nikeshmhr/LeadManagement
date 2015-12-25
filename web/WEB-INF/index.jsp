@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8%">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.leadmngmt.model.LoginInfo" %>
 <html>
     <head>
         <title>Login!</title>
@@ -98,37 +98,26 @@
     </head>
 
     <body>
-        <%@include file="../resources/includes/functions.jsp" %> 
+        <%@include file="../resources/includes/functions.jsp" %>
+        <%
+            SessionInfo sessionInfo = getSessionUserInfo(request, response);
+            
+            out.println("Email-ID: " + sessionInfo.getUserEmailId());
+        %>
         <div id = "container">
             <div id = "logo">
                 <img src="resources/images/logo.jpg" height="150" width="160" alt="College Logo">
             </div>
             <div id = "username">
                 <p><b>Log In!</b></p>
-                <form:form action="LoginController" method="post" commandName="userForm">
-                <!-- Include the following code in POJO codes for "form:errors" error activation:
-                    public class UserValidator implements Validator {
+                <form action="/LeadManagement/logincontroller" method="post">
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="password" name="password" placeholder="Password" />
 
-                        public boolean supports(Class candidate) {
-                            return User.class.isAssignableFrom(candidate);
-                        }
-
-                        public void validate(Object obj, Errors errors) {
-                            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "required", "Field is required.");
-                            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "required", "Field is required.");
-                        }
-                    }
-                 -->
-                    <form:input path="username" placeholder="Username" /><br>
-                    <form:errors path="username">
-
-                    <form:password path="password" placeholder="Password" /><br>
-                    <form:errors path="password">
-
-                    <input type="submit" value="Login">
-                    <p><a href="#">Forgot Password?</a></p>
+                    <input type="submit" name="submit" value="Login" />
                 </form>
             </div>
         </div>
     </body>
 </html>
+

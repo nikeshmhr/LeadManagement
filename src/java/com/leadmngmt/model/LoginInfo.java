@@ -29,6 +29,10 @@ public class LoginInfo extends Staff {
         this.password = password;
     }    
 
+    public LoginInfo() {
+        this("", "");
+    }
+
     /**
      * Accessor method to access the username of user.
      *

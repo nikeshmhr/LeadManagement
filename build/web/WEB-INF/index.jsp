@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@page import="com.leadmngmt.model.LoginInfo" %>
 <html>
     <head>
         <title>Login!</title>
@@ -96,20 +98,26 @@
     </head>
 
     <body>
-        <%@include file="../resources/includes/functions.jsp" %> 
+        <%@include file="../resources/includes/functions.jsp" %>
+        <%
+            SessionInfo sessionInfo = getSessionUserInfo(request, response);
+            
+            out.println("Email-ID: " + sessionInfo.getUserEmailId());
+        %>
         <div id = "container">
             <div id = "logo">
                 <img src="resources/images/logo.jpg" height="150" width="160" alt="College Logo">
             </div>
             <div id = "username">
                 <p><b>Log In!</b></p>
-                <form method="POST" action="LoginController">
-                    <input type="text" placeholder="Username" name="username" required /><br>
-                    <input type="password" placeholder="Password" name="password" required /><br>
-                    <input type="submit" value="Login">
-                    <p><a href="#">Forgot Password?</a></p>
+                <form action="/LeadManagement/logincontroller" method="post">
+                    <input type="text" name="username" placeholder="Username" />
+                    <input type="password" name="password" placeholder="Password" />
+
+                    <input type="submit" name="submit" value="Login" />
                 </form>
             </div>
         </div>
     </body>
 </html>
+

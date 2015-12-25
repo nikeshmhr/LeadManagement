@@ -4,6 +4,9 @@
     Author     : Nikesh Maharjan
 --%>
 
+<%@page import="com.leadmngmt.model.SessionInfo"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%!
     /**
      * Returns the username of the current session if any.
@@ -22,7 +25,7 @@
     /**
      * Returns the user role for the current session.
      */
-    int getSessionUserRole(HttpServletRequest req, HttpServletResponse resp) {
+    int getSessionUserRole(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
         int role = 0;
 
         HttpSession session = req.getSession(false);
@@ -34,5 +37,14 @@
         }
 
         return role;
+    }
+    
+    SessionInfo getSessionUserInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException{
+        SessionInfo sessionUser = new SessionInfo();
+        
+        sessionUser.setUserEmailId(getSessionUser(req, resp));
+        sessionUser.setUserRoleId(getSessionUserRole(req, resp));
+        
+        return sessionUser;
     }
 %>

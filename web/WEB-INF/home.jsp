@@ -12,6 +12,13 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>${username}</h1>
+        <h1>${name}</h1>
+        
+        <%@include file="../resources/includes/functions.jsp" %>
+        <%
+            SessionInfo sessionInfo = getSessionUserInfo(request, response);
+            
+            out.println("Email-ID: " + sessionInfo.getUserEmailId());
+        %>
     </body>
 </html>

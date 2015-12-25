@@ -3,12 +3,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>LMS Reception</title>
+
+        <!-- Importing bootstrap framework jquery and javascrip from js/ -->
+        <script src="/LeadManagement/resources/js/jquery.min.js"></script>
+        <script src="/LeadManagement/resources/js/bootstrap.min.js"></script>
+
         <!--Importing bootstrap min.css framework-->
-        <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="/LeadManagement/resources/css/bootstrap.min.css" rel="stylesheet">
         <!--Importing custom overwriting css named style.css-->
-        <link href="resources/css/style.css" rel="stylesheet">
+        <link href="/LeadManagement/resources/css/style.css" rel="stylesheet">
         <!-- Linking the favicon icon-image -->
-        <link rel="icon" type="image/png" href="resources/images/favicon.png">
+        <link rel="icon" type="image/png" href="/LeadManagement/resources/images/favicon.png">
 
 
         <!-- Internal css for image logo -->
@@ -50,53 +56,51 @@
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#">Add New Lead Information</a></li>
-                    <li><a href="receptionist_bulk_lead_entry.jsp">Add Information in Bulk</a></li>
+                    <li><a href="add/bulk">Add Information in Bulk</a></li>
                 </ul>
 
-                <div class="col-sm-6" class="pull-left" style="background:#d3d3d3; width:50%;">
-                    <form method="POST" action="#">
+                <div class="col-sm-6 pull-left" style="background:#d3d3d3; width:50%;">
+                    <form method="POST" action="/LeadManagement/add/postData">
                         <table>
                             <label><h3>New Lead Entry</h3></label>
                             <tr>
                                 <td>Name: </td>
-                                <td><input type="text" name="name" placeholder="Name"></td>
+                                <td><input type="text" name="name" placeholder="Name" required /></td>
                             </tr>
                             <tr>
                                 <td>Email ID: </td>
-                                <td><input type="email" name="email_id" placeholder="Email ID"></td>
+                                <td><input type="email" name="email_id" placeholder="Email ID" required /></td>
                             </tr>
                             <tr>
                                 <td>Phone Number: </td>
-                                <td><input type="number" name="phone" placeholder="Phone Number"></td>
+                                <td><input type="number" name="phone" placeholder="Phone Number" required /></td>
                             </tr>
                             <tr>
                                 <td>Date of Birth: </td>
-                                <td><input type="date" name="date_of_birth"></td>
+                                <td><input type="date" name="date_of_birth" required /></td>
                             </tr>
                             <tr>
                                 <td>Faculty:</td>
                                 <td>
-                                    <select name = "Faculty">
+                                    <select name = "Faculty" required />
                                         <option>Select Major</option>
                                         <option value="1">B.Sc. Computing</option>
                                         <option value="2">B.Sc. Networking</option>
                                         <option value="3">B.Sc. Multimedia</option>
-                                        <option value="4">B.B.A. Management</option>
-                                        <option value="4">B.B.A. Management</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Semester:</td>
                                 <td>
-                                    <input type="text" name="semester" placeholder="Semester">
+                                    <input type="text" name="semester" placeholder="Semester" required />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Gender: </td>
                                 <td>
-                                    <input type="radio"> Male
-                                    <input type="radio"> Female
+                                    <input type="radio" value="1" name="gender" checked> Male
+                                    <input type="radio" value="0" name="gender"> Female
                                 </td>
                             </tr>
                             <tr>
@@ -112,12 +116,9 @@
             </div>
 
 
-            <div class="pull-right" class="col-md-3">
-                <img src="images/logo.jpg" height="150px" width="160px">
+            <div class="pull-right col-md-3">
+                <img src="/LeadManagement/resources/images/logo.jpg" height="150px" width="160px">
             </div>
         </div>
-        <!-- Importing bootstrap framework jquery and javascrip from js/ -->
-        <script src="resources/js/jquery.min.js"></script>
-        <script src="resources/js/bootstrap.min.js"></script>
     </body>
 </html>

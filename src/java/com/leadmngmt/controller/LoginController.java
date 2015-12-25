@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.leadmngmt.controller;
 
 import com.leadmngmt.model.LoginInfo;
@@ -6,100 +11,88 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
  * @author Nikesh
  */
-public class LoginController extends HttpServlet {
+@Controller
+public class LoginController {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    /*@RequestMapping(value = "/login", method = RequestMethod.GET)
+     public ModelAndView login() {
+     return new ModelAndView("index", "command", new LoginInfo());
+     }
 
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+     @RequestMapping(value = "/logincontroller", method = RequestMethod.POST)
+     public String testMethod(@ModelAttribute LoginInfo info, ModelMap map) {
+     try {
+     map.addAttribute("username", info.getUsername());
+     map.addAttribute("password", info.getPassword());
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+     if (info.isValid()) {
+     return "home";
+     } else {
+     map.addAttribute("message", "Invalid username or password.");
+     return "index";
+     }
+     } catch (ClassNotFoundException ex) {
+     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+     } catch (SQLException ex) {
+     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     return null;
+     }
+    
+     @RequestMapping(value="/testform", method = RequestMethod.POST)
+     public String test(HttpServletRequest req, HttpServletResponse resp, ModelMap map){
+     String name = req.getParameter("name");
+     map.addAttribute("name", name);
+     return "home";
+     }
+    
+     @RequestMapping(value="/form", method=RequestMethod.GET)
+     public String form(){
+     return "testform";
+     }*/
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String showForm() {
+        return "index";
+    }
 
+    @RequestMapping(value = "/logincontroller", method = RequestMethod.POST)
+    public String controlForm(HttpServletRequest req, HttpServletResponse res) {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
         LoginInfo login = new LoginInfo(username, password);
         try {
             boolean status = login.isValid();
-            if (status) { // valid
+
+            if (status) {
                 /**
                  * Creating session for this user.
                  */
-                HttpSession session = request.getSession();
+                HttpSession session = req.getSession();
                 session.setAttribute("userId", login.getEmailId());
                 session.setAttribute("userRole", login.getRole().getRoleId());
                 session.setMaxInactiveInterval(24 * 60 * 60);   // for 24 hours or 1 day
 
-                out.print("<h1>Congratulations!! You are successfully logged in with following credentials:</h1<br/>");
-                out.print("<h3>Username: " + login.getUsername() + "<br/>");
-                out.print("Password: " + login.getPassword() + "<br/>");
-                out.print("RoleId: " + login.getRole() + " doesn't makes sense YET.</h3><br/>");
-                //request.getRequestDispatcher("/login").forward(request, response);
-            } else {
-                out.print("<h3>Invalid User</h3>");
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "home";
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
