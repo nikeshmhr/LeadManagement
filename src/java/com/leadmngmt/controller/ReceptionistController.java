@@ -70,16 +70,14 @@ public class ReceptionistController {
                 out.print("COULD NOT ADD");
             }
 
-        } catch (IOException ex) {
-            out.println(ex.getMessage());
+        } catch (IOException exc) {
+            System.out.println(exc.getMessage());
         } catch (ClassNotFoundException ex) {
-            out.println(ex.getMessage());
+            System.out.println(ex.getMessage());
         } catch (SQLException ex) {
-            out.println(ex.getMessage());
+            System.out.println(ex.getMessage());
         } catch (ParseException ex) {
-            out.println(ex.getMessage());
-        } finally {
-            out.close();
+            System.out.println(ex.getMessage());
         }
 
     }

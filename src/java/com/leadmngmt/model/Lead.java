@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,13 @@ public class Lead {
     private Counsellor counselor;
     private List<Feedback> listOfFeedbacks;
     private boolean gender;
+    
+    public Lead(){
+        faculty = new Faculty();
+        status = new Status();
+        counselor = new Counsellor();
+        listOfFeedbacks = new ArrayList<Feedback>();
+    }
     
     public String getName() {
         return name;
@@ -127,19 +135,23 @@ public class Lead {
         
         Connection c = Database.getConnection();
         
-        PreparedStatement s = c.prepareStatement("INSERT INTO lead_info VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?");
+        PreparedStatement s = c.prepareStatement("INSERT INTO lead_info VALUES(?, ?, "
+                + "?, ?, SYSDATE(), ?, ?, ?, ?, ?, ?)");
+        //PreparedStatement s = c.prepareStatement("INSERT INTO sample VALUES('nikesh', SYSDATE())");
+        //s.setDate(1, new java.sql.Date(getDateOfBirth().getTime()));
         s.setString(1, getEmail());
         s.setString(2, getName());
         s.setString(3, getPhone());
-        System.out.println("Time: " + (getDateOfBirth().getTime()));
         s.setDate(4, new java.sql.Date(getDateOfBirth().getTime()));
-        s.setString(5, "SYSDATE");
-        s.setInt(6, getFaculty().getFacultyId());
-        s.setInt(7, getStatus().getStatusId());
-        s.setInt(8, getFollowupCount());
-        s.setString(9, getSemester());        
-        s.setString(10, "nikesh@gmail.com");  //getCounselor().getEmailId()
-        s.setBoolean(11, isGender());
+//        System.out.println("Time: " + (getDateOfBirth().getTime()));
+//        s.setDate(4, new java.sql.Date(getDateOfBirth().getTime()));
+        
+        s.setInt(5, getFaculty().getFacultyId());
+        s.setInt(6, getStatus().getStatusId());
+        s.setInt(7, getFollowupCount());
+        s.setString(8, getSemester());        
+        s.setString(9, "counsellor_One@gmail.com");  //getCounselor().getEmailId()
+        s.setBoolean(10, isGender());
         
         if(s.executeUpdate() > 0){
             addStatus = true;
