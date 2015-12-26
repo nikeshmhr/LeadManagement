@@ -53,15 +53,15 @@
 
 
             <div class="welcome_text">
-                <span class="pull-right">
+                <h1 class="pull-right">
                     Welcome, Administrator
-                </span>
+                </h1>
             </div>
 
 
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
-                    <li><a href="admin_add_user.html">Add New User</a></li>
+                    <li><a href="/LeadManagement/admin/addUser">Add New User</a></li>
                     <li class="active"><a href="#">Update Present Users</a></li>
                 </ul>
 
@@ -119,8 +119,8 @@
             </div>
 
 
-            <div class="pull-right col-md-3">
-                <img src="/LeadManagement/resources/images/logo.jpg" height="150px" width="160px">
+            <div class="pull-right" class="col-md-3">
+                <img src="/LeadManagement/resources/images/logo.jpg" height="150" width="160">
             </div>
         </div>
     </body>

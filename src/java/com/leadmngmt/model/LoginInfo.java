@@ -105,5 +105,23 @@ public class LoginInfo extends Staff {
         }
         return valid;
     }
+    
+    public boolean createUser() throws ClassNotFoundException, SQLException{
+        boolean isCreated = false;
+        
+        Connection c = Database.getConnection();
+        
+        PreparedStatement statement = c.prepareStatement("INSERT INTO login_info VALUES(?, ?, MD5(?), ?)");
+        statement.setString(1, getEmailId());
+        statement.setString(2, getUsername());
+        statement.setString(3, getPassword());
+        statement.setInt(4, getRole().getRoleId());
+        
+        if(statement.executeUpdate() > 0){
+            isCreated = true;
+        }
+        
+        return isCreated;
+    }
 
 }

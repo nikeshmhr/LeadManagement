@@ -8,6 +8,7 @@
         <!-- Importing bootstrap framework jquery and javascrip from js/ -->
         <script src="/LeadManagement/resources/js/jquery.min.js"></script>
         <script src="/LeadManagement/resources/js/bootstrap.min.js"></script>
+
         <!--Importing bootstrap min.css framework-->
         <link href="/LeadManagement/resources/css/bootstrap.min.css" rel="stylesheet">
         <!--Importing custom overwriting css named style.css-->
@@ -24,6 +25,7 @@
         </style>
     </head>
     <body>
+        ${message}
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -62,29 +64,29 @@
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#">Add New User</a></li>
-                    <li><a href="admin_update_user.html">Update Present Users</a></li>
+                    <li><a href="/LeadManagement/admin/updateUser">Update Present Users</a></li>
                 </ul>
 
                 <div class="col-sm-6 pull-left" style="background:#d3d3d3; width:50%;">
-                    <form method="POST" action="#">
+                    <form method="POST" action="/LeadManagement/admin/addUser">
                         <table>
                             <label><h3>New System User Entry</h3></label>
                             <tr>
                                 <td>Name: </td>
-                                <td><input type="text" name="name" placeholder="Name"></td>
+                                <td><input type="text" name="name" placeholder="Name" required></td>
                             </tr>
                             <tr>
                                 <td>Email ID: </td>
-                                <td><input type="email" name="email_id" placeholder="Email ID"></td>
+                                <td><input type="email" name="email_id" placeholder="Email ID" required></td>
                             </tr>
                             <tr>
                                 <td>Date of Birth: </td>
-                                <td><input type="date" name="date_of_birth"></td>
+                                <td><input type="date" name="date_of_birth" required></td>
                             </tr>
                             <tr>
                                 <td>Role:</td>
                                 <td>
-                                    <select name = "Role">
+                                    <select name = "Role" required>
                                         <option>Select Role</option>
                                         <option value="2">Counselor</option>
                                         <option value="3">Receptionist</option>
@@ -109,8 +111,8 @@
                             <tr>
                                 <td>Gender: </td>
                                 <td>
-                                    <input type="radio"> Male
-                                    <input type="radio"> Female
+                                    <input type="radio" name="gender" value="1" checked> Male
+                                    <input type="radio" name="gender" value="0"> Female
                                 </td>
                             </tr>
                             <tr>
@@ -126,8 +128,8 @@
             </div>
 
 
-            <div class="pull-right" class="col-md-3">
-                <img src="resources/images/logo.jpg" height="150px" width="160px">
+            <div class="pull-right" class="col-md-3" >
+                <img src="/LeadManagement/resources/images/logo.jpg" height="150" width="160">
             </div>
         </div>
     </body>

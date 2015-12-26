@@ -1,5 +1,10 @@
 package com.leadmngmt.model;
 
+import com.leadmngmt.util.Database;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  * This class holds the information of the user or staff.
  *
@@ -10,6 +15,7 @@ public class Staff {
     private String name;
     private String emailId;
     private Role role;
+    private boolean gender;
 
     /**
      * Constructor with no arg.
@@ -88,6 +94,30 @@ public class Staff {
      */
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+    
+    public int addStaff() throws ClassNotFoundException, SQLException{
+        int rowsAdded = 0;
+        
+        Connection c = Database.getConnection();
+        
+        PreparedStatement statement = c.prepareStatement("INSERT INTO staff_info VALUES(?, ?, ?, ?)");
+        statement.setString(1, getEmailId());
+        statement.setString(2, getName());
+        statement.setBoolean(3, isGender());
+        statement.setInt(4, getRole().getRoleId());
+        
+        rowsAdded = statement.executeUpdate();
+        
+        return rowsAdded;
     }
     
 }

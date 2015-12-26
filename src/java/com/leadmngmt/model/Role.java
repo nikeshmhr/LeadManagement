@@ -10,7 +10,7 @@ public class Role {
     private String roleName;
     
     // Constant ids of different roles.
-    public static final int ADMIN = 1, COUNSELLOR = 2, RECEPTIONIST = 3, ADMISSION_OFFICER = 4, MANAGEMENT = 5;
+    public static final int ADMIN = 1, COUNSELLOR = 2, RECEPTIONIST = 3, ADMISSION_OFFICER = 4, TOP_MANAGEMENT = 5;
 
     /**
      * Constructor with one argument.
@@ -71,8 +71,8 @@ public class Role {
                 this.roleName = "Counsellor";
                 break;
                 
-            case Role.MANAGEMENT:
-                this.roleName ="Management";
+            case Role.TOP_MANAGEMENT:
+                this.roleName ="Top Management";
                 break;
                 
             case Role.RECEPTIONIST:

@@ -1,5 +1,10 @@
 package com.leadmngmt.model;
 
+import com.leadmngmt.util.Database;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  * This class encapsulates the properties and characteristics
  * of counselor.
@@ -20,6 +25,7 @@ public class Counsellor extends Staff {
         this.maxNoOfLeads = maxNoOfLeads;
         this.currentNoOfLeads = currentNoOfLeads;
         this.faculty = new Faculty(facultyId);
+        super.setRole(new Role(Role.COUNSELLOR));
     }
 
     public int getMaxNoOfLeads() {
@@ -44,6 +50,22 @@ public class Counsellor extends Staff {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+    
+    public int addCounsellor() throws ClassNotFoundException, SQLException{
+        int rowsInserted = 0;
+        
+        Connection c = Database.getConnection();
+        
+        PreparedStatement statement = c.prepareStatement("INSERT INTO counsellor VALUES(?, ?, ?, ?)");
+        statement.setString(1, getEmailId());
+        statement.setInt(2, getCurrentNoOfLeads());
+        statement.setInt(3, getMaxNoOfLeads());
+        statement.setInt(4, getFaculty().getFacultyId());
+        
+        rowsInserted = statement.executeUpdate();
+        
+        return rowsInserted;
     }
     
     
