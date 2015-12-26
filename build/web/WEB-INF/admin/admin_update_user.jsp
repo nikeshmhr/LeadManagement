@@ -65,6 +65,9 @@
                     <li class="active"><a href="#">Update Present Users</a></li>
                 </ul>
 
+                <!-- This label is out of the table  because of the table's hover property. The hover property doesn't show on this label now.-->
+                <h3>Existing User Information</h3>
+
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="input-group">
@@ -75,9 +78,6 @@
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
                 </div><!-- /.row -->
-
-
-                <label><h3>Existing User Information</h3></label>
 
 
                 <div class="col-sm-6 pull-left" style="background:#d3d3d3; width:50%;">
@@ -109,7 +109,7 @@
                             </tr>
                         </table>
 
-
+                        <!-- This input type is out of the table  because of the table's hover property. The hover property doesn't show on this input type now.-->
                         <input type="submit" value="Update" name="update_user_info">
                     </form>
                 </div>
