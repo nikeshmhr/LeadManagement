@@ -76,10 +76,14 @@
                     </div><!-- /.col-lg-6 -->
                 </div><!-- /.row -->
 
+
+                <label><h3>Existing User Information</h3></label>
+
+
                 <div class="col-sm-6 pull-left" style="background:#d3d3d3; width:50%;">
                     <form method="POST" action="#">
                         <table class="table table-hover">
-                            <label><h3>Existing User Information</h3></label>
+                            
                             <tr>
                                 <td>S.N.</td>
                                 <td>Email</td>
@@ -103,17 +107,10 @@
                                 <td>Management</td>
                                 <td>N/A</td>
                             </tr>
-
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <input type="submit" name="Update">
-                                </td>
-                            </tr>
                         </table>
+
+
+                        <input type="submit" value="Update" name="update_user_info">
                     </form>
                 </div>
             </div>
