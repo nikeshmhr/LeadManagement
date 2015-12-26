@@ -47,7 +47,7 @@
 		<div class="clearfix"></div>
 
 
-		<div class="welcome_text">
+	<div class="welcome_text">
 			<span class="pull-right">
 				<h1>Welcome, Administrator</h1>
 			</span>
@@ -56,63 +56,56 @@
 
 		<div id="entry_form_container" class="col-md-8">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#">Add New User</a></li>
-				<li><a href="admin_update_user.html">Update Present Users</a></li>
+				<li><a href="admin_add_user.html">Add New User</a></li>
+				<li class="active"><a href="#">Update Present Users</a></li>
 			</ul>
+
+			<div class="row">
+  				<div class="col-sm-6">
+    				<div class="input-group">
+      					<input type="text" class="form-control" placeholder="Search for...">
+      					<span class="input-group-btn">
+        					<button class="btn btn-default" type="button">Go!</button>
+      					</span>
+    				</div><!-- /input-group -->
+  				</div><!-- /.col-lg-6 -->
+			</div><!-- /.row -->
 
 			<div class="col-sm-6" class="pull-left" style="background=#d3d3d3; width=50%;">
 				<form method="POST" action="#">
-					<table>
-						<label><h3>New System User Entry</h3></label>
+					<table class="table table-hover">
+						<label><h3>Existing User Information</h3></label>
 						<tr>
-							<td>Name: </td>
-							<td><input type="text" name="name" placeholder="Name"></td>
+							<td>S.N.</td>
+							<td>Email</td>
+							<td>Name</td>
+							<td>Role</td>
+							<td>Faculty</td>
 						</tr>
+
 						<tr>
-							<td>Email ID: </td>
-							<td><input type="email" name="email_id" placeholder="Email ID"></td>
+							<td>1</td>
+							<td>nikesh_da_awesome@nick.com</td>
+							<td>Nikesh Da Awesome</td>
+							<td>God</td>
+							<td>Computing</td>
 						</tr>
+
 						<tr>
-							<td>Date of Birth: </td>
-							<td><input type="date" name="date_of_birth"></td>
+							<td>2</td>
+							<td>bipalshakya@gmail.com</td>
+							<td>Bipal Man Shakya</td>
+							<td>Management</td>
+							<td>N/A</td>
 						</tr>
-						<tr>
-							<td>Role:</td>
-							<td>
-								<select name = "Role">
-									<option>Select Role</option>
-									<option value="2">Counselor</option>
-									<option value="3">Receptionist</option>
-									<option value="4">Admission Officer</option>
-									<option value="5">Top Management</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>Faculty:</td>
-							<td>
-								<select name = "Faculty">
-									<option>Select Faculty</option>
-									<option value="1">Computing</option>
-									<option value="2">Networking</option>
-									<option value="3">Multimedia</option>
-									<option value="4">Management</option>
-									<option value="6">N/A</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>Gender: </td>
-							<td>
-								<input type="radio"> Male
-								<input type="radio"> Female
-							</td>
-						</tr>
+
 						<tr>
 							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
 							<td>
-								<input type="submit" name="Submit">
-								<input type="reset" value="Clear">
+								<input type="submit" name="Update">
 							</td>
 						</tr>
 					</table>
