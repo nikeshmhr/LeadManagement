@@ -41,3 +41,18 @@ select {
 	border: none;
 	height: 30px;
 }
+
+/*Table hover class for hover effects on tables present throughout the web apps*/
+.table-hover {
+	cursor: pointer;
+}
+
+/*Custome css for bootstrap search button named "Go!"
+This is to align the go button and the search text box with each other.
+If the following code is omitted, the search textbox and button are not 
+aligned properly.*/
+.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+    z-index: 2;
+    margin-left: 14px;
+    margin-top: 10px;
+}
