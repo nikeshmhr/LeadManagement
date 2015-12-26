@@ -66,7 +66,7 @@
                 </ul>
 
                 <!-- This label is out of the table  because of the table's hover property. The hover property doesn't show on this label now.-->
-                <label><h3>Existing User Information</h3></label>
+                <h3>Existing User Information</h3>
 
                 <div class="row">
                     <div class="col-sm-6">
@@ -80,7 +80,7 @@
                 </div><!-- /.row -->
 
 
-                <div class="col-sm-6 pull-left">
+                <div class="col-sm-6 pull-left" style="width=50%;">
                     <form method="POST" action="#">
                         <table class="table table-hover">
                             
