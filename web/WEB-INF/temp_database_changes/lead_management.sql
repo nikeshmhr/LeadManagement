@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.10
+-- version 4.0.4
 -- http://www.phpmyadmin.net
 --
--- Host: localhost:8889
--- Generation Time: Dec 26, 2015 at 07:28 AM
--- Server version: 5.5.42
--- PHP Version: 7.0.0
+-- Host: 127.0.0.1
+-- Generation Time: Dec 26, 2015 at 01:05 PM
+-- Server version: 5.5.32
+-- PHP Version: 5.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,11 +14,13 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `lead_management`
 --
+CREATE DATABASE IF NOT EXISTS `lead_management` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `lead_management`;
 
 -- --------------------------------------------------------
 
@@ -26,11 +28,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `counsellor`
 --
 
-CREATE TABLE `counsellor` (
+CREATE TABLE IF NOT EXISTS `counsellor` (
   `email_id` varchar(255) NOT NULL,
   `no_of_current_leads` int(11) NOT NULL,
   `max_no_of_leads` int(11) NOT NULL,
-  `faculty_id` int(11) NOT NULL
+  `faculty_id` int(11) NOT NULL,
+  PRIMARY KEY (`email_id`),
+  KEY `faculty_id` (`faculty_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -39,9 +43,10 @@ CREATE TABLE `counsellor` (
 -- Table structure for table `faculty`
 --
 
-CREATE TABLE `faculty` (
+CREATE TABLE IF NOT EXISTS `faculty` (
   `faculty_id` int(11) NOT NULL,
-  `facutly_name` varchar(255) NOT NULL
+  `facutly_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`faculty_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -52,9 +57,9 @@ INSERT INTO `faculty` (`faculty_id`, `facutly_name`) VALUES
 (1, 'Computing'),
 (2, 'Networking'),
 (3, 'Multimedia'),
-(4, 'bba_management'),
-(5, 'msc_it'),
-(6, 'not_applicable');
+(4, 'BBA_Management'),
+(5, 'MSC_IT'),
+(6, 'Not Applicable');
 
 -- --------------------------------------------------------
 
@@ -62,11 +67,13 @@ INSERT INTO `faculty` (`faculty_id`, `facutly_name`) VALUES
 -- Table structure for table `feedback`
 --
 
-CREATE TABLE `feedback` (
-  `feedback_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `feedback_id` int(11) NOT NULL AUTO_INCREMENT,
   `feedback_text` text NOT NULL,
-  `lead_email_id` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `lead_email_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`feedback_id`),
+  KEY `lead_email_id` (`lead_email_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -74,7 +81,7 @@ CREATE TABLE `feedback` (
 -- Table structure for table `lead_info`
 --
 
-CREATE TABLE `lead_info` (
+CREATE TABLE IF NOT EXISTS `lead_info` (
   `email_id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `phone` varchar(50) NOT NULL,
@@ -84,7 +91,12 @@ CREATE TABLE `lead_info` (
   `student_status_id` int(4) NOT NULL,
   `followup_count` int(11) NOT NULL,
   `semester` varchar(50) NOT NULL,
-  `counsellor_email_id` varchar(255) NOT NULL
+  `counsellor_email_id` varchar(255) NOT NULL,
+  `gender` tinyint(1) NOT NULL,
+  PRIMARY KEY (`email_id`),
+  KEY `faculty_id` (`faculty_id`,`student_status_id`),
+  KEY `counsellor_email_id` (`counsellor_email_id`),
+  KEY `student_status_id` (`student_status_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -93,11 +105,15 @@ CREATE TABLE `lead_info` (
 -- Table structure for table `login_info`
 --
 
-CREATE TABLE `login_info` (
+CREATE TABLE IF NOT EXISTS `login_info` (
   `email_id` varchar(255) NOT NULL,
   `username` varchar(25) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `role` int(11) NOT NULL
+  `role` int(11) NOT NULL,
+  PRIMARY KEY (`email_id`),
+  UNIQUE KEY `username` (`username`),
+  KEY `roles` (`role`),
+  KEY `role` (`role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -113,9 +129,11 @@ INSERT INTO `login_info` (`email_id`, `username`, `password`, `role`) VALUES
 -- Table structure for table `roles`
 --
 
-CREATE TABLE `roles` (
+CREATE TABLE IF NOT EXISTS `roles` (
   `role_id` int(11) NOT NULL,
-  `role_name` varchar(50) NOT NULL
+  `role_name` varchar(50) NOT NULL,
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `role_name` (`role_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -126,8 +144,27 @@ INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 (1, 'Administrator'),
 (4, 'Admission Officer'),
 (2, 'Counsellor'),
-(5, 'Management'),
-(3, 'Receptionist');
+(3, 'Receptionist'),
+(5, 'Top Management');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sample`
+--
+
+CREATE TABLE IF NOT EXISTS `sample` (
+  `name` varchar(20) NOT NULL,
+  `dob` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sample`
+--
+
+INSERT INTO `sample` (`name`, `dob`) VALUES
+('nikesh', '2015-12-01'),
+('nikesh', '2015-12-25');
 
 -- --------------------------------------------------------
 
@@ -135,12 +172,13 @@ INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 -- Table structure for table `staff_info`
 --
 
-CREATE TABLE `staff_info` (
+CREATE TABLE IF NOT EXISTS `staff_info` (
   `email_id` varchar(255) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `date_of_birth` date NOT NULL,
   `gender` tinyint(1) NOT NULL,
-  `role_id` int(11) NOT NULL
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`email_id`),
+  KEY `role_id` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -149,10 +187,11 @@ CREATE TABLE `staff_info` (
 -- Table structure for table `student_status`
 --
 
-CREATE TABLE `student_status` (
-  `student_status_id` int(4) NOT NULL,
-  `student_status` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `student_status` (
+  `student_status_id` int(4) NOT NULL AUTO_INCREMENT,
+  `student_status` varchar(25) NOT NULL,
+  PRIMARY KEY (`student_status_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `student_status`
@@ -166,82 +205,6 @@ INSERT INTO `student_status` (`student_status_id`, `student_status`) VALUES
 (5, 'Pending'),
 (6, 'Admitted');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `counsellor`
---
-ALTER TABLE `counsellor`
-  ADD PRIMARY KEY (`email_id`),
-  ADD KEY `faculty_id` (`faculty_id`);
-
---
--- Indexes for table `faculty`
---
-ALTER TABLE `faculty`
-  ADD PRIMARY KEY (`faculty_id`);
-
---
--- Indexes for table `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`feedback_id`),
-  ADD KEY `lead_email_id` (`lead_email_id`);
-
---
--- Indexes for table `lead_info`
---
-ALTER TABLE `lead_info`
-  ADD PRIMARY KEY (`email_id`),
-  ADD KEY `faculty_id` (`faculty_id`,`student_status_id`),
-  ADD KEY `counsellor_email_id` (`counsellor_email_id`),
-  ADD KEY `student_status_id` (`student_status_id`);
-
---
--- Indexes for table `login_info`
---
-ALTER TABLE `login_info`
-  ADD PRIMARY KEY (`email_id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD KEY `roles` (`role`),
-  ADD KEY `role` (`role`);
-
---
--- Indexes for table `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`role_id`),
-  ADD UNIQUE KEY `role_name` (`role_name`);
-
---
--- Indexes for table `staff_info`
---
-ALTER TABLE `staff_info`
-  ADD PRIMARY KEY (`email_id`),
-  ADD KEY `role_id` (`role_id`);
-
---
--- Indexes for table `student_status`
---
-ALTER TABLE `student_status`
-  ADD PRIMARY KEY (`student_status_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `feedback`
---
-ALTER TABLE `feedback`
-  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `student_status`
---
-ALTER TABLE `student_status`
-  MODIFY `student_status_id` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --
