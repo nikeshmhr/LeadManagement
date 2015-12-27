@@ -86,7 +86,7 @@ public class LoginInfo extends Staff {
 
         Connection c = Database.getConnection();
 
-        PreparedStatement statement = c.prepareStatement("SELECT * FROM login_info WHERE username=? AND password=MD5(?)");
+        PreparedStatement statement = c.prepareStatement("SELECT * FROM login_info WHERE email_id=? AND password=MD5(?)");
         statement.setString(1, getUsername());
         statement.setString(2, getPassword());
 
@@ -106,16 +106,21 @@ public class LoginInfo extends Staff {
         return valid;
     }
     
+    /**
+     * This method helps to create a new user with the information available to this class.
+     * @return The boolean value true to indicated created and false to indicated not created.
+     * @throws ClassNotFoundException Please refer to the Database class.
+     * @throws SQLException Error due to mistake in sql query.
+     */
     public boolean createUser() throws ClassNotFoundException, SQLException{
         boolean isCreated = false;
         
         Connection c = Database.getConnection();
         
-        PreparedStatement statement = c.prepareStatement("INSERT INTO login_info VALUES(?, ?, MD5(?), ?)");
+        PreparedStatement statement = c.prepareStatement("INSERT INTO login_info VALUES(?, MD5(?), ?)");
         statement.setString(1, getEmailId());
-        statement.setString(2, getUsername());
-        statement.setString(3, getPassword());
-        statement.setInt(4, getRole().getRoleId());
+        statement.setString(2, getPassword());
+        statement.setInt(3, getRole().getRoleId());
         
         if(statement.executeUpdate() > 0){
             isCreated = true;

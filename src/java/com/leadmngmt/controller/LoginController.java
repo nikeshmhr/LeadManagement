@@ -1,6 +1,7 @@
 package com.leadmngmt.controller;
 
 import com.leadmngmt.model.LoginInfo;
+import com.leadmngmt.model.Role;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * This class the login.
+ *
  * @author Nikesh
  */
 @Controller
@@ -59,8 +62,8 @@ public class LoginController {
         return "index";
     }
 
-    @RequestMapping(value = "/logincontroller", method = RequestMethod.POST)
-    public String controlForm(HttpServletRequest req, HttpServletResponse res) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String controlForm(HttpServletRequest req, HttpServletResponse res, ModelMap map) {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         LoginInfo login = new LoginInfo(username, password);
@@ -76,13 +79,38 @@ public class LoginController {
                 session.setAttribute("userRole", login.getRole().getRoleId());
                 session.setMaxInactiveInterval(24 * 60 * 60);   // for 24 hours or 1 day
 
+                if (login.getRole().getRoleId() == Role.ADMIN) {
+                    return "/administrator/admin_add_user";
+                } else if (login.getRole().getRoleId() == Role.RECEPTIONIST) {
+                    return "/receptionist/receptionist_single_lead_entry";
+                } else if (login.getRole().getRoleId() == Role.COUNSELLOR) {
+                    return "/counsellor/dashboard";
+                } else if (login.getRole().getRoleId() == Role.ADMISSION_OFFICER) {
+                    return "/admission_officer/dashboard";
+                } else {
+                    return "/top_management/dashboard";
+                }
+            } else {
+                map.addAttribute("errorMessage", "Incorrect username or password.");
+                return "index";
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            map.addAttribute("errorMessage", "Login Failed due to internal error.");
+            return "index";
         } catch (SQLException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            map.addAttribute("errorMessage", "Login Failed: " + ex.getMessage());
+            return "index";
         }
-        return "home";
+        //return "home";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest req) {
+        HttpSession session = req.getSession(false);
+        session.setAttribute("userId", null);
+        session.setAttribute("userRole", 0);
+        
+        return "index";
     }
 
 }

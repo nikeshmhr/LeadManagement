@@ -54,11 +54,11 @@
 
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
-                    <li><a href="/LeadManagement/add">Add New Lead Information</a></li>
+                    <li><a href="/LeadManagement/receptionist/add">Add New Lead Information</a></li>
                     <li class="active"><a href="#">Add Information in Bulk</a></li>
                 </ul>
 
-                <div class="col-sm-6 pull-left" style="background:#d3d3d3; width:50%;">
+                <div class="col-sm-6 pull-left" style="width:50%;">
                     <form method="POST" action="#">
                         <table width="440px">
                             <label><h3>Bulk Information File Upload</h3></label>

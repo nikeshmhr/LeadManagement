@@ -80,7 +80,7 @@
                 </div><!-- /.row -->
 
 
-                <div class="col-sm-6 pull-left" style="width=50%;">
+                <div class="col-sm-6 pull-left" style="width:50%;">
                     <form method="POST" action="#">
                         <table class="table table-hover">
                             
