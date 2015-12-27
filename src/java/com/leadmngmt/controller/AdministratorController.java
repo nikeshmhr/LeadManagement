@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Nikesh
  */
 @Controller
-public class AdminController {
+public class AdministratorController {
 
-    @RequestMapping(value = "/admin/addUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/administrator/addUser", method = RequestMethod.GET)
     public String showDefaultPage() {
-        return "/admin/admin_add_user";
+        return "/administrator/admin_add_user";
     }
 
-    @RequestMapping(value = "/admin/addUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/administrator/addUser", method = RequestMethod.POST)
     public String addUser(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
         try {
             // USER ADDING CODE GOES HERE
@@ -76,20 +76,20 @@ public class AdminController {
             // Insert into login_info
             // Insert into staff_info
             // if the staff is counsellor, also insert into counsellor
-            return "/admin/admin_add_user";
+            return "/administrator/admin_add_user";
         } catch (ParseException ex) {
-            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdministratorController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdministratorController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdministratorController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "/admin/admin_add_user";
+        return "/administrator/admin_add_user";
     }
 
-    @RequestMapping(value = "/admin/updateUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/administrator/updateUser", method = RequestMethod.GET)
     public String showDefaultUpdatePage() {
-        return "/admin/admin_update_user";
+        return "/administrator/admin_update_user";
     }
 
 }

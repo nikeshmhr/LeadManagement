@@ -1,3 +1,4 @@
+<%@page import="com.leadmngmt.model.Role"%>
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -6,6 +7,9 @@
 <html>
     <head>
         <title>Login!</title>
+        <script type="text/javascript" src="/LeadManagement/resources/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/LeadManagement/resources/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/LeadManagement/resources/css/bootstrap.min.css" />
         <style type="text/css">
             #logo {
                 height: 150px;
@@ -100,9 +104,15 @@
     <body>
         <%@include file="../resources/includes/functions.jsp" %>
         <%
-            SessionInfo sessionInfo = getSessionUserInfo(request, response);
-            
-            out.println("Email-ID: " + sessionInfo.getUserEmailId());
+
+            /*response.setHeader("Cache-Control", "no-cache"); //Forces caches to obtain a new copy of the page from the origin server
+             response.setHeader("Cache-Control", "no-store"); //Directs caches not to store the page under any circumstance
+             response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
+             response.setHeader("Pragma", "no-cache"); //HTTP 1.0 backward compatibility*/
+            /*if (!sessionInfo.getUserEmailId().isEmpty() && sessionInfo.getUserRoleId() != 0) {
+                out.println("INSIDE session condition");
+                sessionInfo.redirect(request, response);
+            }*/
         %>
         <div id = "container">
             <div id = "logo">
@@ -110,12 +120,13 @@
             </div>
             <div id = "username">
                 <p><b>Log In!</b></p>
-                <form action="/LeadManagement/logincontroller" method="post">
-                    <input type="text" name="username" placeholder="Username" />
-                    <input type="password" name="password" placeholder="Password" />
+                <form action="/LeadManagement/login" method="post">
+                    <input type="email" name="username" placeholder="Username" required />
+                    <input type="password" name="password" placeholder="Password" required />
 
                     <input type="submit" name="submit" value="Login" />
                 </form>
+                <span class="text-danger">${errorMessage}</span>
             </div>
         </div>
     </body>
