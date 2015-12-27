@@ -44,11 +44,18 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="#">Support</a></li>
+                            <li><a href="/LeadManagement/logout">Log Out</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
 
+            
+            <div class="welcome_text"> 
+                <h1 class="pull-right">
+                    Welcome, Receptionist
+                </h1>
+            </div>
 
             <div class="clearfix"></div>
 
@@ -56,11 +63,11 @@
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#">Add New Lead Information</a></li>
-                    <li><a href="add/bulk">Add Information in Bulk</a></li>
+                    <li><a href="/receptionist/add/bulk">Add Information in Bulk</a></li>
                 </ul>
 
-                <div class="col-sm-6 pull-left" style="background:#d3d3d3; width:50%;">
-                    <form method="POST" action="/LeadManagement/add/postData">
+                <div class="col-sm-6 pull-left" style="width:50%;">
+                    <form method="POST" action="/LeadManagement/receptionist/add/postData">
                         <table>
                             <label><h3>New Lead Entry</h3></label>
                             <tr>
@@ -87,6 +94,8 @@
                                         <option value="1">B.Sc. Computing</option>
                                         <option value="2">B.Sc. Networking</option>
                                         <option value="3">B.Sc. Multimedia</option>
+                                        <option value="4">B.B.A. Management</option>
+                                        <option value="5">M.Sc. IT</option>
                                     </select>
                                 </td>
                             </tr>
