@@ -61,7 +61,7 @@
 
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
-                    <li><a href="/LeadManagement/admin/addUser">Add New User</a></li>
+                    <li><a href="/LeadManagement/administrator/addUser">Add New User</a></li>
                     <li class="active"><a href="#">Update Present Users</a></li>
                 </ul>
 

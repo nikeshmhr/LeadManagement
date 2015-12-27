@@ -104,7 +104,6 @@
     <body>
         <%@include file="../resources/includes/functions.jsp" %>
         <%
-            SessionInfo sessionInfo = getSessionUserInfo(request, response);
 
             /*response.setHeader("Cache-Control", "no-cache"); //Forces caches to obtain a new copy of the page from the origin server
              response.setHeader("Cache-Control", "no-store"); //Directs caches not to store the page under any circumstance
@@ -114,8 +113,6 @@
                 out.println("INSIDE session condition");
                 sessionInfo.redirect(request, response);
             }*/
-            sessionInfo.redirect(request, response);
-            out.println(sessionInfo.getUserEmailId());
         %>
         <div id = "container">
             <div id = "logo">

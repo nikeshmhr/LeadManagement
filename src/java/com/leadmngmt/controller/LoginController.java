@@ -2,6 +2,7 @@ package com.leadmngmt.controller;
 
 import com.leadmngmt.model.LoginInfo;
 import com.leadmngmt.model.Role;
+import com.leadmngmt.model.SessionInfo;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,8 +59,11 @@ public class LoginController {
      return "testform";
      }*/
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String showForm() {
-        return "index";
+    public String showForm(HttpServletRequest request, HttpServletResponse response) {        
+        /** Retrieve the name of the page that the user should be redirected to **/
+        String redirectPageName = (String)new SessionInfo().redirectPage(request);
+        
+        return redirectPageName;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
