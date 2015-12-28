@@ -67,7 +67,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String controlForm(HttpServletRequest req, HttpServletResponse res, ModelMap map) {
+    public String controlForm(HttpServletRequest req, HttpServletResponse res, ModelMap map) {        
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         LoginInfo login = new LoginInfo(username, password);
@@ -110,7 +110,7 @@ public class LoginController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest req) {
-        HttpSession session = req.getSession(false);
+        HttpSession session = req.getSession();
         session.setAttribute("userId", null);
         session.setAttribute("userRole", 0);
         
