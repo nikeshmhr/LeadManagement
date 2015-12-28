@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ReceptionistController {
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping(value = "receptionist/add", method = RequestMethod.GET)
     public String loadDefaultPage() {
         return "receptionist/receptionist_single_lead_entry";
     }
 
-    @RequestMapping(value = "/add/bulk", method = RequestMethod.GET)
+    @RequestMapping(value = "receptionist/add/bulk", method = RequestMethod.GET)
     public String loadBulkAddPage() {
         return "receptionist/receptionist_bulk_lead_entry";
     }
 
-    @RequestMapping(value = "/add/postData", method = RequestMethod.POST)
+    @RequestMapping(value = "receptionist/add/postData", method = RequestMethod.POST)
     public void extractDataFromForm(HttpServletRequest request, HttpServletResponse response) {
         PrintWriter out = null;
         try {

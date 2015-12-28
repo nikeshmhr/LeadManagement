@@ -61,7 +61,7 @@
 
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
-                    <li><a href="/LeadManagement/admin/addUser">Add New User</a></li>
+                    <li><a href="/LeadManagement/administrator/addUser">Add New User</a></li>
                     <li class="active"><a href="#">Update Present Users</a></li>
                 </ul>
 
@@ -80,7 +80,7 @@
                 </div><!-- /.row -->
 
 
-                <div class="col-sm-6 pull-left" style="width=50%;">
+                <div class="col-sm-6 pull-left" style="width:50%;">
                     <form method="POST" action="#">
                         <table class="table table-hover">
                             
