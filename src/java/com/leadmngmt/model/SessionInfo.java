@@ -11,6 +11,10 @@ import javax.servlet.http.HttpSession;
  * @author Nikesh
  */
 public class SessionInfo {
+    
+    private HttpSession session;
+    private String userId;
+    private int userRole;
 
     private String userEmailId;
     private int userRoleId;
@@ -18,6 +22,8 @@ public class SessionInfo {
     public SessionInfo() {
         this.userEmailId = "";
         this.userRoleId = 0;
+        
+        
     }
 
     public SessionInfo(String email, int id) {
@@ -45,9 +51,9 @@ public class SessionInfo {
         /**
          * Getting the current session *
          */
-        HttpSession session = request.getSession(false);
-        String userId = null;
-        int userRole = 0;
+        session = request.getSession(false);
+        userId = null;
+        userRole = 0;
 
         /**
          * If user exists and user role exists set it to its corresponding attributes*
@@ -69,18 +75,19 @@ public class SessionInfo {
          * Return the name of the page according to the role of user *
          */
         if (userRoleId == Role.ADMIN) {
-            return "/administrator/admin_add_user";
+            return "/LeadManagement/administrator/addUser";
+            //return "/administrator/admin_add_user";
         } else if (userRoleId == Role.ADMISSION_OFFICER) {
-            return "/admission_officer/dashboard";
+            return "/LeadManagement/admission_officer/dashboard";
+            //return "/admission_officer/dashboard";
         } else if (userRoleId == Role.COUNSELLOR) {
-            return "/counsellor/dashboard";
+            return "/LeadManagement/counsellor/dashboard";
         } else if (userRoleId == Role.RECEPTIONIST) {
-            return "/receptionist/add";
+            return "/LeadManagement/receptionist/add";
         } else if (userRoleId == Role.TOP_MANAGEMENT) {
-            return "/top_management/dashboard";
-        } else {
-            return "/index";
+            return "/LeadManagement/top_management/dashboard";
         }
+        return "";
     }
 
 }

@@ -1,3 +1,5 @@
+<%@page import="com.leadmngmt.model.Role"%>
+<%@page import="com.leadmngmt.model.SessionInfo"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,6 +28,12 @@
     </head>
     <body>
         ${message}
+        <%
+            SessionInfo sessionInfo = new SessionInfo();
+            if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.ADMIN) {
+                response.sendRedirect("/LeadManagement/login");
+            }
+        %>
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -67,7 +75,7 @@
                     <li><a href="/LeadManagement/administrator/updateUser">Update Present Users</a></li>
                 </ul>
 
-                <div class="col-sm-6 pull-left" style="background:#d3d3d3; width:50%;">
+                <div class="col-sm-6 pull-left" style="width:50%;">
                     <form method="POST" action="/LeadManagement/administrator/addUser">
                         <table>
                             <label><h3>New System User Entry</h3></label>
