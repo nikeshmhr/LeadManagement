@@ -150,7 +150,7 @@ public class Lead {
         s.setInt(6, getStatus().getStatusId());
         s.setInt(7, getFollowupCount());
         s.setString(8, getSemester());        
-        s.setString(9, "counsellor_One@gmail.com");  //getCounselor().getEmailId()
+        s.setString(9, "counsellor@gmail.com");  //getCounselor().getEmailId()
         s.setBoolean(10, isGender());
         
         if(s.executeUpdate() > 0){

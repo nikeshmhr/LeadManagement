@@ -1,3 +1,5 @@
+<%@page import="com.leadmngmt.model.Role"%>
+<%@page import="com.leadmngmt.model.SessionInfo"%>
 <html>
     <head>
         <meta charset="utf-8">
@@ -25,6 +27,12 @@
         </style>
     </head>
     <body>
+        <%
+            SessionInfo sessionInfo = new SessionInfo();
+            if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.RECEPTIONIST) {
+                response.sendRedirect("/LeadManagement/login");
+            }
+        %>
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -44,13 +52,13 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="#">Support</a></li>
-                            <li><a href="/LeadManagement/logout">Log Out</a></li>
+                            <li><a href="/LeadManagement/logout?action=true">Log Out</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
 
-            
+
             <div class="welcome_text"> 
                 <h1 class="pull-right">
                     Welcome, Receptionist
@@ -63,7 +71,7 @@
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#">Add New Lead Information</a></li>
-                    <li><a href="/receptionist/add/bulk">Add Information in Bulk</a></li>
+                    <li><a href="/LeadManagement/receptionist/add/bulk">Add Information in Bulk</a></li>
                 </ul>
 
                 <div class="col-sm-6 pull-left" style="width:50%;">
@@ -90,14 +98,14 @@
                                 <td>Faculty:</td>
                                 <td>
                                     <select name = "Faculty" required />
-                                        <option>Select Major</option>
-                                        <option value="1">B.Sc. Computing</option>
-                                        <option value="2">B.Sc. Networking</option>
-                                        <option value="3">B.Sc. Multimedia</option>
-                                        <option value="4">B.B.A. Management</option>
-                                        <option value="5">M.Sc. IT</option>
-                                    </select>
-                                </td>
+                            <option>Select Major</option>
+                            <option value="1">B.Sc. Computing</option>
+                            <option value="2">B.Sc. Networking</option>
+                            <option value="3">B.Sc. Multimedia</option>
+                            <option value="4">B.B.A. Management</option>
+                            <option value="5">M.Sc. IT</option>
+                            </select>
+                            </td>
                             </tr>
                             <tr>
                                 <td>Semester:</td>

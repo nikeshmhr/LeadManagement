@@ -4,6 +4,8 @@
     Author     : nilu
 --%>
 
+<%@page import="com.leadmngmt.model.SessionInfo"%>
+<%@page import="com.leadmngmt.model.Role"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,12 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%
+            SessionInfo sessionInfo = new SessionInfo();
+            if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.COUNSELLOR) {
+                response.sendRedirect("/LeadManagement/login");
+            }
+        %>
         <h1>Hello Counsellor!</h1>
     </body>
 </html>

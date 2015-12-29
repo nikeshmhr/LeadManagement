@@ -3,6 +3,7 @@ package com.leadmngmt.controller;
 import com.leadmngmt.model.LoginInfo;
 import com.leadmngmt.model.Role;
 import com.leadmngmt.model.SessionInfo;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,15 +60,26 @@ public class LoginController {
      return "testform";
      }*/
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String showForm(HttpServletRequest request, HttpServletResponse response) {        
-        /** Retrieve the name of the page that the user should be redirected to **/
-        String redirectPageName = (String)new SessionInfo().redirectPage(request);
-        
-        return redirectPageName;
+    public String showForm(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        /**
+         * Retrieve the name of the page that the user should be redirected to *
+         */
+        //String redirectPageName = (String) new SessionInfo().redirectPage(request);
+
+//        if (redirectPageName.isEmpty()) {
+//            redirectPageName = "index";
+//        }
+        return "index";
+        //return redirectPageName;
+    }
+
+    @RequestMapping(value = "/redirect", method = RequestMethod.GET)
+    public void redirect(HttpServletRequest req) {
+
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String controlForm(HttpServletRequest req, HttpServletResponse res, ModelMap map) {        
+    public String controlForm(HttpServletRequest req, HttpServletResponse res, ModelMap map) {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         LoginInfo login = new LoginInfo(username, password);
@@ -84,11 +96,15 @@ public class LoginController {
                 session.setMaxInactiveInterval(24 * 60 * 60);   // for 24 hours or 1 day
 
                 if (login.getRole().getRoleId() == Role.ADMIN) {
+                    //return "/administrator/admin_add_user";
+                    System.out.println("BEFORE RETURN");
                     return "/administrator/admin_add_user";
                 } else if (login.getRole().getRoleId() == Role.RECEPTIONIST) {
                     return "/receptionist/receptionist_single_lead_entry";
+                    //return "/receptionist/receptionist_single_lead_entry";
                 } else if (login.getRole().getRoleId() == Role.COUNSELLOR) {
                     return "/counsellor/dashboard";
+                    //return "/counsellor/dashboard";
                 } else if (login.getRole().getRoleId() == Role.ADMISSION_OFFICER) {
                     return "/admission_officer/dashboard";
                 } else {
@@ -111,10 +127,11 @@ public class LoginController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        session.setAttribute("userId", null);
-        session.setAttribute("userRole", 0);
-        
+        if (req.getParameter("action").equals("true")) {
+            session.setAttribute("userId", null);
+            session.setAttribute("userRole", 0);
+        }
+
         return "index";
     }
-
 }

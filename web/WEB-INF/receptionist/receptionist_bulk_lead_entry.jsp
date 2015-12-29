@@ -1,3 +1,5 @@
+<%@page import="com.leadmngmt.model.SessionInfo"%>
+<%@page import="com.leadmngmt.model.Role"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,6 +26,12 @@
         </style>
     </head>
     <body>
+        <%
+            SessionInfo sessionInfo = new SessionInfo();
+            if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.RECEPTIONIST) {
+                response.sendRedirect("/LeadManagement/login");
+            }
+        %>
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">

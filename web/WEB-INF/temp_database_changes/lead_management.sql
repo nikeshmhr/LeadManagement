@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2015 at 01:05 PM
+-- Generation Time: Dec 29, 2015 at 10:09 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
@@ -36,6 +36,13 @@ CREATE TABLE IF NOT EXISTS `counsellor` (
   PRIMARY KEY (`email_id`),
   KEY `faculty_id` (`faculty_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `counsellor`
+--
+
+INSERT INTO `counsellor` (`email_id`, `no_of_current_leads`, `max_no_of_leads`, `faculty_id`) VALUES
+('counsellor@gmail.com', 1, 8, 2);
 
 -- --------------------------------------------------------
 
@@ -99,6 +106,13 @@ CREATE TABLE IF NOT EXISTS `lead_info` (
   KEY `student_status_id` (`student_status_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `lead_info`
+--
+
+INSERT INTO `lead_info` (`email_id`, `name`, `phone`, `date_of_birth`, `date_of_entry`, `faculty_id`, `student_status_id`, `followup_count`, `semester`, `counsellor_email_id`, `gender`) VALUES
+('nick@gmail.com', 'Nikesh Maharjan', '91349829384', '1995-02-28', '2015-12-29', 1, 1, 0, 'S16', 'counsellor@gmail.com', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -107,11 +121,9 @@ CREATE TABLE IF NOT EXISTS `lead_info` (
 
 CREATE TABLE IF NOT EXISTS `login_info` (
   `email_id` varchar(255) NOT NULL,
-  `username` varchar(25) NOT NULL,
   `password` varchar(50) NOT NULL,
   `role` int(11) NOT NULL,
   PRIMARY KEY (`email_id`),
-  UNIQUE KEY `username` (`username`),
   KEY `roles` (`role`),
   KEY `role` (`role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -120,8 +132,12 @@ CREATE TABLE IF NOT EXISTS `login_info` (
 -- Dumping data for table `login_info`
 --
 
-INSERT INTO `login_info` (`email_id`, `username`, `password`, `role`) VALUES
-('admin_example@gmail.com', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1);
+INSERT INTO `login_info` (`email_id`, `password`, `role`) VALUES
+('admin_example@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 1),
+('admission@gmail.com', '281edb7c3cf81e3b67aaa09df4e313f5', 4),
+('counsellor@gmail.com', '03b8462409f387fad11237e39025e1e3', 2),
+('receptionist@gmail.com', '0a9b3767c8b9b69cea129110e8daeda2', 3),
+('top@gmail.com', 'd10af457daa1deed54e2c36b5f295e7e', 5);
 
 -- --------------------------------------------------------
 
@@ -180,6 +196,13 @@ CREATE TABLE IF NOT EXISTS `staff_info` (
   PRIMARY KEY (`email_id`),
   KEY `role_id` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `staff_info`
+--
+
+INSERT INTO `staff_info` (`email_id`, `name`, `gender`, `role_id`) VALUES
+('admin_example@gmail.com', 'Administrator', 1, 1);
 
 -- --------------------------------------------------------
 
