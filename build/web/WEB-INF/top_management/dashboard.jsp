@@ -14,7 +14,10 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@include file="../../resources/includes/functions.jsp" %>
         <%
+            disableBrowserCache(response);
+
             SessionInfo sessionInfo = new SessionInfo();
             if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.TOP_MANAGEMENT) {
                 response.sendRedirect("/LeadManagement/login");

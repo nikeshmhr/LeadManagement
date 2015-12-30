@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.leadmngmt.model.Role"%>
 <%@page import="com.leadmngmt.model.SessionInfo"%>
 <html>
@@ -27,7 +28,10 @@
         </style>
     </head>
     <body>
+        <%@include file="../../resources/includes/functions.jsp" %>
         <%
+            disableBrowserCache(response);
+            
             SessionInfo sessionInfo = new SessionInfo();
             if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.RECEPTIONIST) {
                 response.sendRedirect("/LeadManagement/login");
@@ -52,7 +56,7 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="#">Support</a></li>
-                            <li><a href="/LeadManagement/logout?action=true">Log Out</a></li>
+                            <li><a href="/LeadManagement/logout">Log Out</a></li>
                         </ul>
                     </div>
                 </div>
