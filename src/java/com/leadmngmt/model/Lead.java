@@ -135,7 +135,7 @@ public class Lead {
         
         Connection c = Database.getConnection();
         
-        PreparedStatement s = c.prepareStatement("INSERT INTO lead_info VALUES(?, ?, "
+        PreparedStatement s = c.prepareStatement("INSERT INTO lead_info VALUES(null, ?, ?, "
                 + "?, ?, SYSDATE(), ?, ?, ?, ?, ?, ?)");
         //PreparedStatement s = c.prepareStatement("INSERT INTO sample VALUES('nikesh', SYSDATE())");
         //s.setDate(1, new java.sql.Date(getDateOfBirth().getTime()));
@@ -150,7 +150,7 @@ public class Lead {
         s.setInt(6, getStatus().getStatusId());
         s.setInt(7, getFollowupCount());
         s.setString(8, getSemester());        
-        s.setString(9, "counsellor@gmail.com");  //getCounselor().getEmailId()
+        s.setString(9, "ST103");  
         s.setBoolean(10, isGender());
         
         if(s.executeUpdate() > 0){
