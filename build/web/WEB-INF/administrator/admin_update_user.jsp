@@ -1,3 +1,4 @@
+<%@page import="com.leadmngmt.model.Role"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,6 +25,17 @@
         </style>
     </head>
     <body>
+        <%@include file="../../resources/includes/functions.jsp" %>
+        <%
+            disableBrowserCache(response);
+
+            SessionInfo sessionInfo = new SessionInfo();
+            if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.ADMIN) {
+                response.sendRedirect("/LeadManagement/login");
+            }
+        %>
+
+
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -83,7 +95,7 @@
                 <div class="col-sm-6 pull-left" style="width:50%;">
                     <form method="POST" action="#">
                         <table class="table table-hover">
-                            
+
                             <tr>
                                 <td>S.N.</td>
                                 <td>Email</td>

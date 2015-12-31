@@ -27,8 +27,10 @@
         </style>
     </head>
     <body>
-        ${message}
+        <%@include file="../../resources/includes/functions.jsp" %>
         <%
+            disableBrowserCache(response);
+            
             SessionInfo sessionInfo = new SessionInfo();
             if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.ADMIN) {
                 response.sendRedirect("/LeadManagement/login");
