@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -34,12 +35,8 @@ public class ReceptionistController {
     }
 
     @RequestMapping(value = "receptionist/add/postData", method = RequestMethod.POST)
-    public void extractDataFromForm(HttpServletRequest request, HttpServletResponse response) {
-        PrintWriter out = null;
+    public String extractDataFromForm(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
         try {
-            response.setContentType("text/html");
-            out = response.getWriter();
-
             String name = request.getParameter("name");
             String email = request.getParameter("email_id");
             String phone = request.getParameter("phone");
@@ -61,25 +58,21 @@ public class ReceptionistController {
             lead.setSemester(semester);
             lead.setGender(gender);
 
-            out.println("test string");
             boolean addStatus = lead.addLead();
-            out.print(addStatus + " STATUS");
             if (addStatus) {
-                out.print("SUCCESSFULLY ADDED");
+                map.addAttribute("message", "Lead successfully added");
             } else {
-                out.print("COULD NOT ADD");
+                map.addAttribute("message", "Failed to add lead.");
             }
 
-        } catch (IOException exc) {
-            System.out.println(exc.getMessage());
         } catch (ClassNotFoundException ex) {
-            System.out.println(ex.getMessage());
+            map.addAttribute("message", "Failed to add lead due to internal driver problem.");
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            map.addAttribute("message", "Failed to add lead due to internal error.");
         } catch (ParseException ex) {
-            System.out.println(ex.getMessage());
+            map.addAttribute("message", "Failed to add lead due to parse error.");
         }
-
+        return "receptionist/receptionist_single_lead_entry";
     }
 
 }

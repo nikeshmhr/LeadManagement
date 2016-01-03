@@ -13,8 +13,7 @@ import javax.servlet.http.HttpSession;
 public class SessionInfo {
     
     private HttpSession session;
-    private String userId;
-    private int userRole;
+    private String id;
 
     private String userEmailId;
     private int userRoleId;
@@ -47,13 +46,25 @@ public class SessionInfo {
         this.userRoleId = userRoleId;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String redirectPage(HttpServletRequest request) {
+        String userId;
+        int userRole;
+        String id;
         /**
          * Getting the current session *
          */
         session = request.getSession(false);
         userId = null;
         userRole = 0;
+        id = null;
 
         /**
          * If user exists and user role exists set it to its corresponding attributes*
@@ -70,6 +81,13 @@ public class SessionInfo {
         } else {
             this.setUserRoleId(0);
         }
+        if(session.getAttribute("id") != null){
+            id = session.getAttribute("id").toString();
+            this.setId(id);
+        }else{
+            this.setId(null);
+        }
+        System.out.println(id);
 
         /**
          * Return the name of the page according to the role of user *

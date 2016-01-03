@@ -76,9 +76,11 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#">Add New Lead Information</a></li>
                     <li><a href="/LeadManagement/receptionist/add/bulk">Add Information in Bulk</a></li>
-                </ul>
-
+                </ul>                
+                
+                
                 <div class="col-sm-6 pull-left" style="width:50%;">
+                    <span>${message}</span>
                     <form method="POST" action="/LeadManagement/receptionist/add/postData">
                         <table>
                             <label><h3>New Lead Entry</h3></label>
@@ -120,8 +122,8 @@
                             <tr>
                                 <td>Gender: </td>
                                 <td>
-                                    <input type="radio" value="1" name="gender" checked> Male
-                                    <input type="radio" value="0" name="gender"> Female
+                                    <input type="radio" value="true" name="gender" checked> Male
+                                    <input type="radio" value="false" name="gender"> Female
                                 </td>
                             </tr>
                             <tr>

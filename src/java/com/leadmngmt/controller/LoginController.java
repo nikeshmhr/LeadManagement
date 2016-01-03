@@ -20,49 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 
-    /*@RequestMapping(value = "/login", method = RequestMethod.GET)
-     public ModelAndView login() {
-     return new ModelAndView("index", "command", new LoginInfo());
-     }
-
-     @RequestMapping(value = "/logincontroller", method = RequestMethod.POST)
-     public String testMethod(@ModelAttribute LoginInfo info, ModelMap map) {
-     try {
-     map.addAttribute("username", info.getUsername());
-     map.addAttribute("password", info.getPassword());
-
-     if (info.isValid()) {
-     return "home";
-     } else {
-     map.addAttribute("message", "Invalid username or password.");
-     return "index";
-     }
-     } catch (ClassNotFoundException ex) {
-     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-     } catch (SQLException ex) {
-     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-     }
-     return null;
-     }
-    
-     @RequestMapping(value="/testform", method = RequestMethod.POST)
-     public String test(HttpServletRequest req, HttpServletResponse resp, ModelMap map){
-     String name = req.getParameter("name");
-     map.addAttribute("name", name);
-     return "home";
-     }
-    
-     @RequestMapping(value="/form", method=RequestMethod.GET)
-     public String form(){
-     return "testform";
-     }*/
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showForm() {
         return "index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String controlForm(HttpServletRequest req, HttpServletResponse res, ModelMap map) {
+    public String controlForm(HttpServletRequest req, HttpServletResponse res, ModelMap map) throws IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         LoginInfo login = new LoginInfo(username, password);
@@ -76,22 +40,25 @@ public class LoginController {
                 HttpSession session = req.getSession();
                 session.setAttribute("userId", login.getEmailId());
                 session.setAttribute("userRole", login.getRole().getRoleId());
+                session.setAttribute("id", login.getId());
+                
                 session.setMaxInactiveInterval(30 * 60);  // session valid only for 30 minutes
 
                 if (login.getRole().getRoleId() == Role.ADMIN) {
+                    res.sendRedirect("/LeadManagement/administrator/addUser");  // this url will be mapped by spring and should match the controller url
                     //return "/administrator/admin_add_user";
-                    //System.out.println("BEFORE RETURN");
-                    return "/administrator/admin_add_user";
                 } else if (login.getRole().getRoleId() == Role.RECEPTIONIST) {
-                    return "/receptionist/receptionist_single_lead_entry";
+                    res.sendRedirect("/LeadManagement/receptionist/add");
                     //return "/receptionist/receptionist_single_lead_entry";
                 } else if (login.getRole().getRoleId() == Role.COUNSELLOR) {
-                    return "/counsellor/dashboard";
                     //return "/counsellor/dashboard";
+                    res.sendRedirect("/LeadManagement/counsellor/dashboard");
                 } else if (login.getRole().getRoleId() == Role.ADMISSION_OFFICER) {
-                    return "/admission_officer/dashboard";
+                    //return "/admission_officer/dashboard";
+                    res.sendRedirect("/LeadManagement/admisssion_officer/dashboard");
                 } else {
-                    return "/top_management/dashboard";
+                    //return "/top_management/dashboard";
+                    res.sendRedirect("/LeadManagement/top_management/dashboard");
                 }
             } else {
                 map.addAttribute("errorMessage", "Incorrect username or password.");
@@ -104,6 +71,7 @@ public class LoginController {
             map.addAttribute("errorMessage", "Login Failed: " + ex.getMessage());
             return "index";
         }
+        return null;
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)

@@ -3,6 +3,7 @@ package com.leadmngmt.model;
 import com.leadmngmt.util.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,14 +28,14 @@ public class Lead {
     private Counsellor counselor;
     private List<Feedback> listOfFeedbacks;
     private boolean gender;
-    
-    public Lead(){
+
+    public Lead() {
         faculty = new Faculty();
         status = new Status();
         counselor = new Counsellor();
         listOfFeedbacks = new ArrayList<Feedback>();
     }
-    
+
     public String getName() {
         return name;
     }
@@ -85,7 +86,7 @@ public class Lead {
 
     public Status getStatus() {
         return status;
-    }    
+    }
 
     public int getFollowupCount() {
         return followupCount;
@@ -127,14 +128,20 @@ public class Lead {
         this.gender = gender;
     }
 
-    public boolean addLead() throws ClassNotFoundException, SQLException{
+    public void setDateOfEntry(Date dateOfEntry) {
+        this.dateOfEntry = dateOfEntry;
+    }
+    
+
+    public boolean addLead() throws ClassNotFoundException, SQLException {
         boolean addStatus = false;
-        
-        /** Let's assign a counsellor to this lead dynamically **/
+
+        /**
+         * Let's assign a counsellor to this lead dynamically *
+         */
         //assignCounsellor();
-        
         Connection c = Database.getConnection();
-        
+
         PreparedStatement s = c.prepareStatement("INSERT INTO lead_info VALUES(null, ?, ?, "
                 + "?, ?, SYSDATE(), ?, ?, ?, ?, ?, ?)");
         //PreparedStatement s = c.prepareStatement("INSERT INTO sample VALUES('nikesh', SYSDATE())");
@@ -145,19 +152,75 @@ public class Lead {
         s.setDate(4, new java.sql.Date(getDateOfBirth().getTime()));
 //        System.out.println("Time: " + (getDateOfBirth().getTime()));
 //        s.setDate(4, new java.sql.Date(getDateOfBirth().getTime()));
-        
+
         s.setInt(5, getFaculty().getFacultyId());
         s.setInt(6, getStatus().getStatusId());
         s.setInt(7, getFollowupCount());
-        s.setString(8, getSemester());        
-        s.setString(9, "ST103");  
+        s.setString(8, getSemester());
+        System.out.println("BEFORE METHOD CALL");
+        String counsellorId = getCounsellorId();
+        System.out.println("AFTER METHOD CALL");
+        System.out.println(counsellorId);
+        s.setString(9, counsellorId);
         s.setBoolean(10, isGender());
-        
-        if(s.executeUpdate() > 0){
+
+        if (s.executeUpdate() > 0 && getCounselor().updateCounsellor() > 0) {
             addStatus = true;
         }
-        
+
         return addStatus;
     }
-    
+
+    /**
+     * Reads all the list of counsellor available in database and applies algorithm to determine the appropriate councellor and assigns to the lead.
+     * @return The selected counsellor's ID.
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
+    private String getCounsellorId() throws ClassNotFoundException, SQLException {
+        String counsellorId = null;
+        int loopCount = 0;
+        
+        List<Counsellor> listOfCounsellors = new ArrayList<Counsellor>();
+        
+        int noOfCounsellor = 0;
+        
+        Connection c = Database.getConnection();
+        PreparedStatement statement = c.prepareStatement("SELECT * FROM counsellor");
+        ResultSet rs = statement.executeQuery();
+        while(rs.next()){
+            String id = rs.getString("id");
+            int noOfCurrentLeads = rs.getInt("no_of_current_leads");
+            int maxNoOfLeads = rs.getInt("max_no_of_leads");
+            int facultyId = rs.getInt("faculty_id");
+            
+            Counsellor counsellor = new Counsellor(maxNoOfLeads, noOfCurrentLeads, facultyId, id);
+            
+            listOfCounsellors.add(counsellor);
+            
+            noOfCounsellor++;
+        }
+        
+        while(getCounselor().getId().isEmpty() && (loopCount < (2 * noOfCounsellor))){
+            int randomNumber = (int)(Math.random() * noOfCounsellor);
+            System.out.println("RAND 1 " + randomNumber);
+            Counsellor counsellor = listOfCounsellors.get(randomNumber);
+            if(counsellor.getMaxNoOfLeads() > counsellor.getCurrentNoOfLeads()){
+                setCounselor(counselor);
+                counsellor.setCurrentNoOfLeads(counsellor.getCurrentNoOfLeads() + 1);
+                counsellorId = counsellor.getId();
+            }
+            loopCount++;
+        }
+        
+        if(getCounselor().getId().isEmpty()){
+            int randomNo = (int) (Math.random() * noOfCounsellor);
+            System.out.println("RAND 2 " + randomNo);
+            Counsellor coun = listOfCounsellors.get(randomNo);
+            setCounselor(coun);
+            counsellorId = coun.getId();
+        }
+        
+        return counsellorId;
+    }
 }

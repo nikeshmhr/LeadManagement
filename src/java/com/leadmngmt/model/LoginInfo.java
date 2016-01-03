@@ -16,6 +16,7 @@ public class LoginInfo extends Staff {
 
     private String username;
     private String password;
+    private String id;
 
     /**
      * Constructor with 2 args.
@@ -69,6 +70,13 @@ public class LoginInfo extends Staff {
         this.password = password;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId(){
+        return this.id;
+    }
     
 
     /**
@@ -92,6 +100,8 @@ public class LoginInfo extends Staff {
 
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
+            setId(resultSet.getString("id"));
+            System.out.println("ID WHILE SETTING:" + resultSet.getString("id"));
             String mailId = resultSet.getString("email_id");
             super.setEmailId(mailId);
 
@@ -117,10 +127,11 @@ public class LoginInfo extends Staff {
         
         Connection c = Database.getConnection();
         
-        PreparedStatement statement = c.prepareStatement("INSERT INTO login_info VALUES(?, MD5(?), ?)");
-        statement.setString(1, getEmailId());
+        PreparedStatement statement = c.prepareStatement("INSERT INTO login_info VALUES(?, MD5(?), ?, ?)");
+        statement.setString(1, getId());
         statement.setString(2, getPassword());
         statement.setInt(3, getRole().getRoleId());
+        statement.setString(4, getEmailId());
         
         if(statement.executeUpdate() > 0){
             isCreated = true;
