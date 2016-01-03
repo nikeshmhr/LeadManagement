@@ -1,18 +1,17 @@
 <%-- 
-    Document   : dashboard
-    Created on : Dec 27, 2015, 10:51:46 AM
+    Document   : leads_list
+    Created on : Jan 3, 2016, 6:58:01 PM
     Author     : Nikesh Maharjan
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.leadmngmt.model.SessionInfo"%>
 <%@page import="com.leadmngmt.model.Role"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Counsellor</title>
+        <title>List of leads</title>
         <!-- Importing bootstrap framework jquery and javascrip from js/ -->
         <script src="/LeadManagement/resources/js/jquery.min.js"></script>
         <script src="/LeadManagement/resources/js/bootstrap.min.js"></script>
@@ -35,9 +34,7 @@
                 response.sendRedirect("/LeadManagement/login");
             }
         %>
-        
-        <a href="/LeadManagement/counsellor/leads">List of leads</a>
-        
+
         <table class="table table-hover">
             <caption><h1>List of leads</h1></caption>
             <thead>
@@ -66,7 +63,5 @@
                 </c:forEach>
             </tbody>
         </table>
-
-        
     </body>
 </html>

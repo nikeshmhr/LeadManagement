@@ -121,8 +121,8 @@
                             <tr>
                                 <td>Gender: </td>
                                 <td>
-                                    <input type="radio" name="gender" value="1" checked> Male
-                                    <input type="radio" name="gender" value="0"> Female
+                                    <input type="radio" name="gender" value="true" checked> Male
+                                    <input type="radio" name="gender" value="false"> Female
                                 </td>
                             </tr>
                             <tr>
