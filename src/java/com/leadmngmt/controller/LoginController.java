@@ -42,7 +42,7 @@ public class LoginController {
                 session.setAttribute("userRole", login.getRole().getRoleId());
                 session.setAttribute("id", login.getId());
                 
-                session.setMaxInactiveInterval(30 * 60);  // session valid only for 30 minutes
+                session.setMaxInactiveInterval(5 * 60);  // session valid only for 5 minutes
 
                 if (login.getRole().getRoleId() == Role.ADMIN) {
                     res.sendRedirect("/LeadManagement/administrator/addUser");  // this url will be mapped by spring and should match the controller url
