@@ -13,9 +13,11 @@ import java.sql.SQLException;
 public class Staff {
 
     private String name;
+    private String id;
     private String emailId;
     private Role role;
     private boolean gender;
+    private String facultyName; // just for use while displaying list of all users.
 
     /**
      * Constructor with no arg.
@@ -103,6 +105,24 @@ public class Staff {
     public void setGender(boolean gender) {
         this.gender = gender;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
+    }
+    
+    
     
     public int addStaff() throws ClassNotFoundException, SQLException{
         int rowsAdded = 0;
@@ -110,7 +130,7 @@ public class Staff {
         Connection c = Database.getConnection();
         
         PreparedStatement statement = c.prepareStatement("INSERT INTO staff_info VALUES(?, ?, ?, ?)");
-        statement.setString(1, getEmailId());
+        statement.setString(1, getId());
         statement.setString(2, getName());
         statement.setBoolean(3, isGender());
         statement.setInt(4, getRole().getRoleId());

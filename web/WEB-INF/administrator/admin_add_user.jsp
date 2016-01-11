@@ -70,7 +70,8 @@
                 </h1>
             </div>
 
-
+            ${message}
+            ${details}
             <div id="entry_form_container" class="col-md-8">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#">Add New User</a></li>

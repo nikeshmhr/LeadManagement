@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.leadmngmt.model.Role"%>
 <!DOCTYPE html>
 <html>
@@ -97,28 +98,21 @@
                         <table class="table table-hover">
 
                             <tr>
-                                <td>S.N.</td>
+                                <td>ID</td>
                                 <td>Email</td>
                                 <td>Name</td>
                                 <td>Role</td>
                                 <td>Faculty</td>
                             </tr>
-
-                            <tr>
-                                <td>1</td>
-                                <td>nikesh_da_awesome@nick.com</td>
-                                <td>Nikesh Da Awesome</td>
-                                <td>God</td>
-                                <td>Computing</td>
-                            </tr>
-
-                            <tr>
-                                <td>2</td>
-                                <td>bipalshakya@gmail.com</td>
-                                <td>Bipal Man Shakya</td>
-                                <td>Management</td>
-                                <td>N/A</td>
-                            </tr>
+                            <c:forEach items="${allUsers}" var="user">
+                                <tr>
+                                    <td><c:out value="${user.id}" /></td>
+                                    <td><c:out value="${user.emailId}" /></td>
+                                    <td><c:out value="${user.name}" /></td>
+                                    <td><c:out value="${user.role.roleName}" /></td>
+                                    <td><c:out value="${user.facultyName}" /></td>                                    
+                                </tr>
+                            </c:forEach>
                         </table>
 
                         <!-- This input type is out of the table  because of the table's hover property. The hover property doesn't show on this input type now.-->
