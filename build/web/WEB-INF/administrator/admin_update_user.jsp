@@ -103,6 +103,7 @@
                                 <td>Name</td>
                                 <td>Role</td>
                                 <td>Faculty</td>
+                                <td>Action</td>
                             </tr>
                             <c:forEach items="${allUsers}" var="user">
                                 <tr>
@@ -110,7 +111,8 @@
                                     <td><c:out value="${user.emailId}" /></td>
                                     <td><c:out value="${user.name}" /></td>
                                     <td><c:out value="${user.role.roleName}" /></td>
-                                    <td><c:out value="${user.facultyName}" /></td>                                    
+                                    <td><c:out value="${user.facultyName}" /></td>
+                                    <td><a href="/LeadManagement/administrator/deleteUser?id=<c:out value='${user.id}' />"><span class="glyphicon glyphicon-remove" /></a></td>
                                 </tr>
                             </c:forEach>
                         </table>

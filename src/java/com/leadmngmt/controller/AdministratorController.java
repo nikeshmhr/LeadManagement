@@ -6,6 +6,7 @@ import com.leadmngmt.model.Role;
 import com.leadmngmt.model.Staff;
 import com.leadmngmt.util.DataAccessObject;
 import com.leadmngmt.util.Database;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -102,6 +105,32 @@ public class AdministratorController {
             map.addAttribute("message", "Exception: Internal sql error.");
         }
         return "/administrator/admin_update_user";
+    }
+
+    @RequestMapping(value = "/administrator/deleteUser", method = RequestMethod.GET)
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String id = request.getParameter("id");
+
+        LoginInfo info = new LoginInfo();
+        info.setId(id);
+
+        int rowsModified = 0;
+        try {
+            rowsModified = info.deleteUser();
+        } catch (ClassNotFoundException ex) {
+            request.setAttribute("message", "Exception: Internal driver error.");
+        } catch (SQLException ex) {
+            request.setAttribute("message", "Exception: Internal sql error.");
+        }
+
+        if (rowsModified > 0) {
+            request.setAttribute("message", "User deleted successfully.");
+        } else {
+            request.setAttribute("message", "Cannot delete user.");
+        }
+
+        response.sendRedirect("/LeadManagement/administrator/updateUser");
     }
 
     private String getGeneratedId() throws SQLException, ClassNotFoundException {
