@@ -135,6 +135,25 @@ public class LoginInfo extends Staff {
         return isCreated;
     }
 
+    /**
+     * Deletes the user base on the user id.
+     * @return No. of modified (deleted) rows.
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
+     */
+    public int deleteUser() throws ClassNotFoundException, SQLException {
+        int rowsModified = 0;
+        
+        Connection c = Database.getConnection();
+        
+        PreparedStatement statement = c.prepareStatement("DELETE FROM login_info WHERE id=?");
+        statement.setString(1, getId());
+        
+        rowsModified = statement.executeUpdate();
+        
+        return rowsModified;       
+    }
+
     
 
 }
