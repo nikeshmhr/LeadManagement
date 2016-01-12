@@ -1,6 +1,7 @@
 package com.leadmngmt.controller;
 
 import com.leadmngmt.model.Counsellor;
+import com.leadmngmt.model.Faculty;
 import com.leadmngmt.model.LoginInfo;
 import com.leadmngmt.model.Role;
 import com.leadmngmt.model.Staff;
@@ -105,6 +106,39 @@ public class AdministratorController {
             map.addAttribute("message", "Exception: Internal sql error.");
         }
         return "/administrator/admin_update_user";
+    }
+
+    @RequestMapping(value = "/administrator/updateUserInfo", method = RequestMethod.POST)
+    public void updateUserInformation(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String userId = request.getParameter("userId");
+        String emailId = request.getParameter("email");
+        String name = request.getParameter("name");
+        int roleId = Integer.parseInt(request.getParameter("role"));
+        int facultyId = Integer.parseInt(request.getParameter("faculty"));
+
+        LoginInfo staff = new LoginInfo();
+        staff.setId(userId);
+        staff.setEmailId(emailId);
+        staff.setName(name);
+        staff.setRole(new Role(roleId));
+        staff.setFacultyName(new Faculty(facultyId).getFacultyName());
+
+        int rows = 0;
+        try {
+            rows = staff.updateUser();
+        } catch (ClassNotFoundException ex) {
+            request.setAttribute("message", "Exception: Internal driver error.");
+        } catch (SQLException ex) {
+            request.setAttribute("message", "Exception: Internal sql error.");
+        }
+
+        if (rows > 0) {
+            request.setAttribute("message", "User deleted successfully.");
+        } else {
+            request.setAttribute("message", "Cannot delete user.");
+        }
+
+        response.sendRedirect("/LeadManagement/administrator/updateUser");
     }
 
     @RequestMapping(value = "/administrator/deleteUser", method = RequestMethod.GET)

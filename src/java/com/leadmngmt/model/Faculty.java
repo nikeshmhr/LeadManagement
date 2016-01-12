@@ -44,11 +44,11 @@ public class Faculty {
             case MANAGEMENT:
                 setFacultyName("Management");
                 break;
-                
+
             case NA:
                 setFacultyName("N/A");
                 break;
-                
+
             default:
                 setFacultyName("");
         }
@@ -68,6 +68,22 @@ public class Faculty {
 
     public void setFacultyName(String facultyName) {
         this.facultyName = facultyName;
+    }
+
+    public int getFacultyIdByName(String name) {
+        if (name.equalsIgnoreCase("computing")) {
+            return COMPUTING;
+        } else if (name.equalsIgnoreCase("networking")) {
+            return NETWORKING;
+        } else if (name.equalsIgnoreCase("multimedia")) {
+            return MULTIMEDIA;
+        } else if (name.equalsIgnoreCase("management")) {
+            return MANAGEMENT;
+        } else if (name.equalsIgnoreCase("na")) {
+            return NA;
+        } else {
+            return 0;
+        }
     }
 
 }

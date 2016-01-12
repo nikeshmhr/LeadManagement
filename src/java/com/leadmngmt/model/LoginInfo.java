@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * This class holds the login info of the user and provides the functionality to
@@ -69,7 +70,6 @@ public class LoginInfo extends Staff {
         this.password = password;
     }
 
-
     /**
      * Method that validates the username and password against database.
      *
@@ -123,7 +123,7 @@ public class LoginInfo extends Staff {
         Connection c = Database.getConnection();
 
         PreparedStatement statement = c.prepareStatement("INSERT INTO login_info VALUES(?, MD5(?), ?, ?)");
-        statement.setString(1,getId());
+        statement.setString(1, getId());
         statement.setString(2, getPassword());
         statement.setInt(3, getRole().getRoleId());
         statement.setString(4, getEmailId());
@@ -137,23 +137,59 @@ public class LoginInfo extends Staff {
 
     /**
      * Deletes the user base on the user id.
+     *
      * @return No. of modified (deleted) rows.
      * @throws java.lang.ClassNotFoundException
      * @throws java.sql.SQLException
      */
     public int deleteUser() throws ClassNotFoundException, SQLException {
         int rowsModified = 0;
-        
+
         Connection c = Database.getConnection();
-        
+
         PreparedStatement statement = c.prepareStatement("DELETE FROM login_info WHERE id=?");
         statement.setString(1, getId());
-        
+
         rowsModified = statement.executeUpdate();
-        
-        return rowsModified;       
+
+        return rowsModified;
     }
 
-    
+    public int updateUser() throws ClassNotFoundException, SQLException {
+        int rowsModified = 0;
+
+        Connection c = Database.getConnection();
+
+        PreparedStatement st = c.prepareStatement("UPDATE login_info SET email_id=? WHERE id=? AND role=?");
+        st.setString(1, getEmailId());
+        st.setString(2, getId());
+        st.setInt(3, getRole().getRoleId());
+
+        rowsModified = st.executeUpdate();
+
+        if (rowsModified == 0) {
+            return 0;
+        }
+
+        st = c.prepareStatement("UPDATE staff_info SET name=? WHERE id=? AND role_id=?");
+        st.setString(1, getName());
+        st.setString(2, getId());
+        st.setInt(3, getRole().getRoleId());
+
+        rowsModified = st.executeUpdate();
+        if(rowsModified == 0){
+            return 0;
+        }
+
+        if (getRole().getRoleId() == Role.COUNSELLOR) {
+            st = c.prepareStatement("UPDATE counsellor SET faculty_id=? WHERE id=?");
+            st.setInt(1, new Faculty().getFacultyIdByName(getFacultyName()));
+            st.setString(2, getId());
+            
+            rowsModified = st.executeUpdate();
+        }
+
+        return rowsModified;
+    }
 
 }
