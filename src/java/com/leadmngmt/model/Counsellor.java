@@ -76,7 +76,7 @@ public class Counsellor extends Staff {
         Connection c = Database.getConnection();
 
         PreparedStatement statement = c.prepareStatement("INSERT INTO counsellor VALUES(?, ?, ?, ?)");
-        statement.setString(1, getEmailId());
+        statement.setString(1, getId());
         statement.setInt(2, getCurrentNoOfLeads());
         statement.setInt(3, getMaxNoOfLeads());
         statement.setInt(4, getFaculty().getFacultyId());

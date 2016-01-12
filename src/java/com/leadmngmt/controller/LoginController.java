@@ -70,7 +70,7 @@ public class LoginController {
         } catch (SQLException ex) {
             map.addAttribute("errorMessage", "Login Failed: " + ex.getMessage());
             return "index";
-        }
+        } 
         return null;
     }
 

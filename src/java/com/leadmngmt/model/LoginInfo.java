@@ -104,6 +104,7 @@ public class LoginInfo extends Staff {
 
             break;
         }
+        statement.close();
         return valid;
     }
 
