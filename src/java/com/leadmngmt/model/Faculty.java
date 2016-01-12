@@ -15,7 +15,7 @@ public class Faculty {
     private int facultyId;
     private String facultyName;
 
-    public static final int COMPUTING = 1, NETWORKING = 2, MULTIMEDIA = 3;
+    public static final int COMPUTING = 1, NETWORKING = 2, MULTIMEDIA = 3, MANAGEMENT = 5, NA = 6;
 
     public Faculty() {
         this(0);
@@ -41,6 +41,14 @@ public class Faculty {
                 setFacultyName("Multimedia");
                 break;
 
+            case MANAGEMENT:
+                setFacultyName("Management");
+                break;
+
+            case NA:
+                setFacultyName("N/A");
+                break;
+
             default:
                 setFacultyName("");
         }
@@ -60,6 +68,22 @@ public class Faculty {
 
     public void setFacultyName(String facultyName) {
         this.facultyName = facultyName;
+    }
+
+    public int getFacultyIdByName(String name) {
+        if (name.equalsIgnoreCase("computing")) {
+            return COMPUTING;
+        } else if (name.equalsIgnoreCase("networking")) {
+            return NETWORKING;
+        } else if (name.equalsIgnoreCase("multimedia")) {
+            return MULTIMEDIA;
+        } else if (name.equalsIgnoreCase("management")) {
+            return MANAGEMENT;
+        } else if (name.equalsIgnoreCase("na")) {
+            return NA;
+        } else {
+            return 0;
+        }
     }
 
 }
