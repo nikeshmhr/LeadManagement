@@ -16,7 +16,7 @@ input[type=text], [type=email], [type=number] {
 }
 
 /*color for submit and clear button*/
-input[type=submit], [type=reset] {
+input[type=submit], [type=reset], [type=button] {
     width: 105px;
     border: none;
     background: blue;
@@ -25,6 +25,10 @@ input[type=submit], [type=reset] {
     margin-left: 0px;
     margin-top: 20px;
     border-radius: 0px 0px 7px 7px;
+}
+
+input[type=button]{
+    background: red;
 }
 
 /*Change of background and font color on hover for submit and clear button*/

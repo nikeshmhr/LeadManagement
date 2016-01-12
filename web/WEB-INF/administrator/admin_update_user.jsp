@@ -26,11 +26,11 @@
         </style>
 
         <script type="text/javascript">
-            function validate(){
+            function validate() {
                 var status = confirm("Are you sure?");
-                if(status){
+                if (status) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
@@ -123,8 +123,71 @@
                                     <td><c:out value="${user.name}" /></td>
                                     <td><c:out value="${user.role.roleName}" /></td>
                                     <td><c:out value="${user.facultyName}" /></td>
-                                    <td><a href="/LeadManagement/administrator/deleteUser?id=<c:out value='${user.id}' />" onclick="return validate();"><span class="glyphicon glyphicon-remove" /></a></td>
+                                    <td>
+                                        <a href="/LeadManagement/administrator/deleteUser?id=<c:out value='${user.id}' />" onclick="return validate();">
+                                            <span class="glyphicon glyphicon-remove" />
+                                        </a>
+                                        |
+                                        <a href="#<c:out value='${user.id}' />" data-toggle="modal">
+                                            <span class="glyphicon glyphicon-edit" title="Edit"></span>
+                                        </a> 
+
+                                    </td>
                                 </tr>
+                                <div class="modal fade" tabindex="-1" role="dialog" id="<c:out value='${user.id}' />">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="/LeadManagement/administrator/updateUser" method="post">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title">Edit User</h4>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="userId">User Id</label>
+                                                        <input type="text" disabled="true" class="form-control" maxlength="10" value="<c:out value='${user.id}' />" />
+                                                        <input type="hidden" name="userId" value="<c:out value='${user.id}' />" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input type="email" name="email" class="form-control" min="10" max="50" value="<c:out value="${user.emailId}" />" required />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="name">Name</label>
+                                                        <input type="text" name="name" class="form-control" min="3" value="<c:out value="${user.name}" />" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="role">Role</label>
+                                                        <select name = "role" required>
+                                                            <option>Select Role</option>
+                                                            <option value="2" <c:if test="${user.role.roleId eq Role.COUNSELLOR}"><c:out value="selected" /></c:if>>Counselor</option>
+                                                            <option value="3" <c:if test="${user.role.roleId eq Role.RECEPTIONIST}"><c:out value="selected" /></c:if>>Receptionist</option>
+                                                            <option value="4" <c:if test="${user.role.roleId eq Role.ADMISSION_OFFICER}"><c:out value="selected" /></c:if>>Admission Officer</option>
+                                                            <option value="5" <c:if test="${user.role.roleId eq Role.TOP_MANAGEMENT}"><c:out value="selected" /></c:if>>Top Management</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="faculty">Role</label>
+                                                            <select name = "faculty" required>
+                                                                <option value="6">Select Faculty</option>
+                                                                <option value="1" <c:if test="${user.facultyName eq 'Computing'}"><c:out value="selected" /></c:if>>Computing</option>
+                                                                <option value="2" <c:if test="${user.facultyName eq 'Networking'}"><c:out value="selected" /></c:if>>Networking</option>
+                                                                <option value="3" <c:if test="${user.facultyName eq 'Multimedia'}"><c:out value="selected" /></c:if>>Multimedia</option>
+                                                                <option value="4" <c:if test="${user.facultyName eq 'Management'}"><c:out value="selected" /></c:if>>Management</option>
+                                                                <option value="6" <c:if test="${user.facultyName eq 'NA'}"><c:out value="selected" /></c:if>>N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="hidden" name="action" value="update" />
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        <input type="submit" value="Save changes" class="btn btn-default btn-success" />
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                             </c:forEach>
                         </table>
 
