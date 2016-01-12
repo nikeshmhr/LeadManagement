@@ -11,11 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -51,8 +48,6 @@ public class AdministratorController {
 
             boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
 
-            System.out.println("GENDER: " + gender);
-
             LoginInfo info = new LoginInfo();
             info.setEmailId(email);
             info.setName(name);
@@ -70,7 +65,6 @@ public class AdministratorController {
                 c.setMaxNoOfLeads(8);
                 c.setCurrentNoOfLeads(0);
                 c.setId(info.getId());
-
             }
 
             boolean isUserCreated = info.createUser();

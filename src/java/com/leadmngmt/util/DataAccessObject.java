@@ -1,6 +1,5 @@
 package com.leadmngmt.util;
 
-import com.leadmngmt.model.Counsellor;
 import com.leadmngmt.model.Faculty;
 import com.leadmngmt.model.Role;
 import com.leadmngmt.model.Staff;
@@ -52,7 +51,7 @@ public class DataAccessObject {
          */
         for (Staff staff : listOfStaffs) {
             if (staff.getRole().getRoleId() == Role.COUNSELLOR) {
-                statement = connection.prepareStatement("SELECT facult_id FROM counsellor WHERE id=?");
+                statement = connection.prepareStatement("SELECT faculty_id FROM counsellor WHERE id=?");
                 statement.setString(1, staff.getId());
 
                 rs = statement.executeQuery();
@@ -62,7 +61,7 @@ public class DataAccessObject {
                 }
             }
         }
-
+        System.out.println(listOfStaffs);
         return listOfStaffs;
     }
 

@@ -109,8 +109,7 @@
                             <tr>
                                 <td>Faculty:</td>
                                 <td>
-                                    <select name = "Faculty">
-                                        <option>Select Faculty</option>
+                                    <select name = "Faculty" required>
                                         <option value="1">Computing</option>
                                         <option value="2">Networking</option>
                                         <option value="3">Multimedia</option>

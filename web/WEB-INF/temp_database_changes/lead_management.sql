@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2015 at 07:42 AM
+-- Generation Time: Jan 11, 2016 at 06:12 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
@@ -38,13 +38,6 @@ CREATE TABLE IF NOT EXISTS `counsellor` (
   KEY `id` (`id`),
   KEY `id_2` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `counsellor`
---
-
-INSERT INTO `counsellor` (`id`, `no_of_current_leads`, `max_no_of_leads`, `faculty_id`) VALUES
-('ST103', 8, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -106,11 +99,12 @@ CREATE TABLE IF NOT EXISTS `lead_info` (
   `counsellor_id` varchar(255) NOT NULL,
   `gender` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `email_id` (`email_id`),
   KEY `faculty_id` (`faculty_id`,`student_status_id`),
   KEY `counsellor_email_id` (`counsellor_id`),
   KEY `student_status_id` (`student_status_id`),
   KEY `counsellor_id` (`counsellor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
@@ -135,8 +129,7 @@ CREATE TABLE IF NOT EXISTS `login_info` (
 
 INSERT INTO `login_info` (`id`, `password`, `role`, `email_id`) VALUES
 ('ST101', '21232f297a57a5a743894a0e4a801fc3', 1, 'admin@gmail.com'),
-('ST102', '0a9b3767c8b9b69cea129110e8daeda2', 3, 'receptionist@gmail.com'),
-('ST103', '03b8462409f387fad11237e39025e1e3', 2, 'counsellor@gmail.com');
+('ST102', '2a9a148783ba0837800106b161bcfb3e', 3, 'bip@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -197,6 +190,14 @@ CREATE TABLE IF NOT EXISTS `staff_info` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `staff_info`
+--
+
+INSERT INTO `staff_info` (`id`, `name`, `gender`, `role_id`) VALUES
+('ST101', 'Nikesh Maharjan', 1, 1),
+('ST102', 'Bipal Woman Shakya', 0, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -229,8 +230,8 @@ INSERT INTO `student_status` (`student_status_id`, `student_status`) VALUES
 -- Constraints for table `counsellor`
 --
 ALTER TABLE `counsellor`
-  ADD CONSTRAINT `counsellor_ibfk_3` FOREIGN KEY (`id`) REFERENCES `login_info` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `counsellor_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`faculty_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `counsellor_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`faculty_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `counsellor_ibfk_3` FOREIGN KEY (`id`) REFERENCES `login_info` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `feedback`
@@ -242,9 +243,9 @@ ALTER TABLE `feedback`
 -- Constraints for table `lead_info`
 --
 ALTER TABLE `lead_info`
-  ADD CONSTRAINT `lead_info_ibfk_4` FOREIGN KEY (`counsellor_id`) REFERENCES `counsellor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `lead_info_ibfk_2` FOREIGN KEY (`student_status_id`) REFERENCES `student_status` (`student_status_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `lead_info_ibfk_3` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`faculty_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `lead_info_ibfk_3` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`faculty_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `lead_info_ibfk_4` FOREIGN KEY (`counsellor_id`) REFERENCES `counsellor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `login_info`
@@ -256,8 +257,8 @@ ALTER TABLE `login_info`
 -- Constraints for table `staff_info`
 --
 ALTER TABLE `staff_info`
-  ADD CONSTRAINT `staff_info_ibfk_2` FOREIGN KEY (`id`) REFERENCES `login_info` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `staff_info_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `staff_info_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `staff_info_ibfk_2` FOREIGN KEY (`id`) REFERENCES `login_info` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
