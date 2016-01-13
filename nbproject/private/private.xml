@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/burn/NetBeansProjects/LeadManagement/web/resources/css/style.css</file>
+            <file>file:/home/burn/NetBeansProjects/LeadManagement/src/java/com/leadmngmt/controller/AdministratorController.java</file>
+            <file>file:/home/burn/NetBeansProjects/LeadManagement/web/WEB-INF/administrator/admin_add_user.jsp</file>
+            <file>file:/home/burn/NetBeansProjects/LeadManagement/src/java/com/leadmngmt/util/DataAccessObject.java</file>
+            <file>file:/home/burn/NetBeansProjects/LeadManagement/web/WEB-INF/administrator/admin_update_user.jsp</file>
+        </group>
     </open-files>
 </project-private>
