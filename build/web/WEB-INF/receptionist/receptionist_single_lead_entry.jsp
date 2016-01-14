@@ -31,37 +31,14 @@
         <%@include file="../../resources/includes/functions.jsp" %>
         <%
             disableBrowserCache(response);
-            
+
             SessionInfo sessionInfo = new SessionInfo();
             if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.RECEPTIONIST) {
                 response.sendRedirect("/LeadManagement/login");
             }
         %>
         <div class="container">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!--brand and toggle get grouped for better mobile display-->
-                    <!-- The following code is for the collapsed menu button -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" >
-                            <span class="sr-only"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#">Support</a></li>
-                            <li><a href="/LeadManagement/logout">Log Out</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
+            <%@include file="../menus.jsp" %>
 
             <div class="welcome_text"> 
                 <h1 class="pull-right">
@@ -77,8 +54,8 @@
                     <li class="active"><a href="#">Add New Lead Information</a></li>
                     <li><a href="/LeadManagement/receptionist/add/bulk">Add Information in Bulk</a></li>
                 </ul>                
-                
-                
+
+
                 <div class="col-sm-6 pull-left" style="width:50%;">
                     <span>${message}</span>
                     <form method="POST" action="/LeadManagement/receptionist/add/postData">
@@ -103,15 +80,15 @@
                             <tr>
                                 <td>Faculty:</td>
                                 <td>
-                                    <select name = "Faculty" required />
-                            <option>Select Major</option>
-                            <option value="1">B.Sc. Computing</option>
-                            <option value="2">B.Sc. Networking</option>
-                            <option value="3">B.Sc. Multimedia</option>
-                            <option value="4">B.B.A. Management</option>
-                            <option value="5">M.Sc. IT</option>
-                            </select>
-                            </td>
+                                    <select name = "Faculty" required>
+                                        <option value="0">Select Major</option>
+                                        <option value="1">B.Sc. Computing</option>
+                                        <option value="2">B.Sc. Networking</option>
+                                        <option value="3">B.Sc. Multimedia</option>
+                                        <option value="4">B.B.A. Management</option>
+                                        <option value="5">M.Sc. IT</option>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Semester:</td>

@@ -30,35 +30,14 @@
         <%@include file="../../resources/includes/functions.jsp" %>
         <%
             disableBrowserCache(response);
-            
+
             SessionInfo sessionInfo = new SessionInfo();
             if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.ADMIN) {
                 response.sendRedirect("/LeadManagement/login");
             }
         %>
         <div class="container">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!--brand and toggle get grouped for better mobile display-->
-                    <!-- The following code is for the collapsed menu button -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#">Support</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <%@include file="../menus.jsp" %>
 
 
             <div class="clearfix"></div>
