@@ -31,7 +31,7 @@
         <%@include file="../../resources/includes/functions.jsp" %>
         <%
             disableBrowserCache(response);
-            
+
             SessionInfo sessionInfo = new SessionInfo();
             if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.RECEPTIONIST) {
                 response.sendRedirect("/LeadManagement/login");
@@ -77,8 +77,8 @@
                     <li class="active"><a href="#">Add New Lead Information</a></li>
                     <li><a href="/LeadManagement/receptionist/add/bulk">Add Information in Bulk</a></li>
                 </ul>                
-                
-                
+
+
                 <div class="col-sm-6 pull-left" style="width:50%;">
                     <span>${message}</span>
                     <form method="POST" action="/LeadManagement/receptionist/add/postData">
@@ -103,15 +103,15 @@
                             <tr>
                                 <td>Faculty:</td>
                                 <td>
-                                    <select name = "Faculty" required />
-                            <option>Select Major</option>
-                            <option value="1">B.Sc. Computing</option>
-                            <option value="2">B.Sc. Networking</option>
-                            <option value="3">B.Sc. Multimedia</option>
-                            <option value="4">B.B.A. Management</option>
-                            <option value="5">M.Sc. IT</option>
-                            </select>
-                            </td>
+                                    <select name = "Faculty" required>
+                                        <option value="0">Select Major</option>
+                                        <option value="1">B.Sc. Computing</option>
+                                        <option value="2">B.Sc. Networking</option>
+                                        <option value="3">B.Sc. Multimedia</option>
+                                        <option value="4">B.B.A. Management</option>
+                                        <option value="5">M.Sc. IT</option>
+                                    </select>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Semester:</td>

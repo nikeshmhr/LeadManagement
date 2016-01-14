@@ -166,7 +166,7 @@
                                                         <input type="hidden" value="<c:out value='${user.role.roleId}' />" name="role" />
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="faculty">Role</label>
+                                                        <label for="faculty">Faculty</label>
                                                         <select name = "faculty" required>
                                                             <option value="6">Select Faculty</option>
                                                             <option value="1" <c:if test="${user.facultyName eq 'Computing'}"><c:out value="selected" /></c:if>>Computing</option>
