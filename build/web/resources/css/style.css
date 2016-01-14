@@ -16,7 +16,7 @@ input[type=text], [type=email], [type=number] {
 }
 
 /*color for submit and clear button*/
-input[type=submit], [type=reset], [type=button] {
+input[type=submit], [type=reset], #but {
     width: 105px;
     border: none;
     background: blue;
@@ -27,12 +27,12 @@ input[type=submit], [type=reset], [type=button] {
     border-radius: 0px 0px 7px 7px;
 }
 
-input[type=button]{
-    background: red;
+#but{
+    background: maroon;
 }
 
 /*Change of background and font color on hover for submit and clear button*/
-input[type=submit]:hover, [type=reset]:hover {
+input[type=submit]:hover, [type=reset]:hover, #but:hover {
     background: white;
     color: black;
 }

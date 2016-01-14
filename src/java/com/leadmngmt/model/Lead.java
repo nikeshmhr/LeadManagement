@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class Lead {
 
+    private int id;
     private String name;
     private String phone;
     private String email;
@@ -131,6 +132,16 @@ public class Lead {
     public void setDateOfEntry(Date dateOfEntry) {
         this.dateOfEntry = dateOfEntry;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
     
 
     public boolean addLead() throws ClassNotFoundException, SQLException {
@@ -222,5 +233,29 @@ public class Lead {
         }
         
         return counsellorId;
+    }
+    
+    public Lead getDetailsUsingId() throws ClassNotFoundException, SQLException{
+        Connection c = Database.getConnection();
+        PreparedStatement s = c.prepareStatement("SELECT * FROM lead_info WHERE id=?");
+        s.setInt(1, getId());
+        
+        ResultSet rs = s.executeQuery();
+        while(rs.next()){
+            this.setEmail(rs.getString("email_id"));
+            this.setFaculty(new Faculty(rs.getInt("faculty_id")));
+            this.setStatus(new Status(rs.getInt("student_status_id")));
+            this.setName(rs.getString("name"));
+            this.setPhone(rs.getString("phone"));
+            this.setFollowupCount(rs.getInt("followup_count"));
+            this.setSemester(rs.getString("semester"));
+            this.setGender(rs.getBoolean("gender"));
+            this.setDateOfBirth(rs.getDate("date_of_birth"));
+            this.setDateOfEntry(rs.getDate("date_of_entry"));
+            break;
+        }
+                
+        
+        return this;
     }
 }

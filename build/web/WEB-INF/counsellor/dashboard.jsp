@@ -38,8 +38,8 @@
 
         <div id="container">
             <%@include file="../menus.jsp" %>
-            
-            <a href="/LeadManagement/counsellor/leads">List of leads</a>
+
+            <a href="/LeadManagement/counsellor/leads">List of leads (new)</a>
 
             <table class="table table-hover">
                 <caption><h1>List of leads</h1></caption>
@@ -56,16 +56,18 @@
 
                 <tbody>
                     <c:forEach var="lead" items="${leads}">
-
-                        <tr>
-                            <td><c:out value="${lead.name}" /></td>
+                        <tr>                            
+                            <td>
+                                <a href="/LeadManagement/counsellor/lead/details?id=<c:out value='${lead.id}' />">
+                                    <c:out value="${lead.name}" />
+                                </a>
+                            </td>
                             <td><c:out value="${lead.faculty.facultyName}" /></td>
                             <td><c:out value="${lead.status.statusName}" /></td>
                             <td><c:out value="${lead.semester}" /></td>
                             <td><c:out value="${lead.dateOfEntry}" /></td>
                             <td><c:out value="${lead.followupCount}" /></td>
                         </tr>
-
                     </c:forEach>
                 </tbody>
             </table>

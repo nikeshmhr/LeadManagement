@@ -63,7 +63,7 @@ public class CounsellorController {
              */
             Counsellor counsellor = new Counsellor();
             counsellor.setId(id);
-            listOfLeads = (ArrayList<Lead>) counsellor.getListOfLeads();
+            listOfLeads = (ArrayList<Lead>) counsellor.getListOfNewLeads();
             System.out.println("LEADS SHOULD BE DISPLAYED");
         } catch (ClassNotFoundException ex) {
             map.addAttribute("message", "Could not load leads due to internal driver error.");
@@ -71,8 +71,26 @@ public class CounsellorController {
             map.addAttribute("message", "Could not load leads due to internal error.");
         }
         map.addAttribute("leads", listOfLeads);
-        
+
         return "/counsellor/leads_list";
+    }
+
+    @RequestMapping(value = "/counsellor/lead/details", method = RequestMethod.GET)
+    public String showDetailsOfLead(ModelMap map, HttpServletRequest req) {
+        int id = Integer.parseInt(req.getParameter("id"));
+        
+        Lead l = new Lead();
+        l.setId(id);
+        try {
+            l.getDetailsUsingId();
+            map.addAttribute("lead", l);
+        } catch (ClassNotFoundException ex) {
+            map.addAttribute("message", "Could not load leads due to internal driver error.");
+        } catch (SQLException ex) {
+            map.addAttribute("message", "Could not load leads due to internal error.");
+        }       
+        
+        return "/counsellor/lead_details";
     }
 
 }

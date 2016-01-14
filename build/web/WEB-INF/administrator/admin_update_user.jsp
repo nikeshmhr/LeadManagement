@@ -158,7 +158,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <input type="hidden" name="action" value="update" />
-                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-danger" id="but" data-dismiss="modal">Close</button>
                                                         <input type="submit" value="Save changes" class="btn btn-default btn-success" />
                                                     </div>
                                                 </form>
