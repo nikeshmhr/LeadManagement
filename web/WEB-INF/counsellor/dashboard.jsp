@@ -35,38 +35,41 @@
                 response.sendRedirect("/LeadManagement/login");
             }
         %>
-        
-        <a href="/LeadManagement/counsellor/leads">List of leads</a>
-        
-        <table class="table table-hover">
-            <caption><h1>List of leads</h1></caption>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Faculty</th>
-                    <th>Status</th>
-                    <th>Semester</th>
-                    <th>Date of Entry</th>
-                    <th>Followup Count</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                <c:forEach var="lead" items="${leads}">
+        <div id="container">
+            <%@include file="../menus.jsp" %>
+            
+            <a href="/LeadManagement/counsellor/leads">List of leads</a>
 
+            <table class="table table-hover">
+                <caption><h1>List of leads</h1></caption>
+                <thead>
                     <tr>
-                        <td><c:out value="${lead.name}" /></td>
-                        <td><c:out value="${lead.faculty.facultyName}" /></td>
-                        <td><c:out value="${lead.status.statusName}" /></td>
-                        <td><c:out value="${lead.semester}" /></td>
-                        <td><c:out value="${lead.dateOfEntry}" /></td>
-                        <td><c:out value="${lead.followupCount}" /></td>
+                        <th>Name</th>
+                        <th>Faculty</th>
+                        <th>Status</th>
+                        <th>Semester</th>
+                        <th>Date of Entry</th>
+                        <th>Followup Count</th>
                     </tr>
+                </thead>
 
-                </c:forEach>
-            </tbody>
-        </table>
+                <tbody>
+                    <c:forEach var="lead" items="${leads}">
 
-        
+                        <tr>
+                            <td><c:out value="${lead.name}" /></td>
+                            <td><c:out value="${lead.faculty.facultyName}" /></td>
+                            <td><c:out value="${lead.status.statusName}" /></td>
+                            <td><c:out value="${lead.semester}" /></td>
+                            <td><c:out value="${lead.dateOfEntry}" /></td>
+                            <td><c:out value="${lead.followupCount}" /></td>
+                        </tr>
+
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
     </body>
 </html>

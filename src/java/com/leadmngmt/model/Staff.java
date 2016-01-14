@@ -28,6 +28,7 @@ public class Staff {
 
     /**
      * Constructor with one argument.
+     *
      * @param name The name of the staff.
      */
     public Staff(String name) {
@@ -36,6 +37,7 @@ public class Staff {
 
     /**
      * Constructor with two args.
+     *
      * @param name The name of the staff.
      * @param role The role id of the staff.
      */
@@ -48,7 +50,8 @@ public class Staff {
 
     /**
      * Accessor method to access the name of staff.
-     * @return 
+     *
+     * @return
      */
     public String getName() {
         return name;
@@ -56,12 +59,13 @@ public class Staff {
 
     /**
      * Mutator method to set the name of the staff.
-     * @param name 
+     *
+     * @param name
      */
     public void setName(String name) {
         this.name = name;
     }
-    
+
     /**
      * Accessor method to get the email address of user.
      *
@@ -79,7 +83,7 @@ public class Staff {
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
-    
+
     /**
      * Accessor method to access the role object of the user.
      *
@@ -121,23 +125,38 @@ public class Staff {
     public void setFacultyName(String facultyName) {
         this.facultyName = facultyName;
     }
-    
-    
-    
-    public int addStaff() throws ClassNotFoundException, SQLException{
+
+    public int addStaff() throws ClassNotFoundException, SQLException {
         int rowsAdded = 0;
-        
+
         Connection c = Database.getConnection();
-        
+
         PreparedStatement statement = c.prepareStatement("INSERT INTO staff_info VALUES(?, ?, ?, ?)");
         statement.setString(1, getId());
         statement.setString(2, getName());
         statement.setBoolean(3, isGender());
         statement.setInt(4, getRole().getRoleId());
-        
+
         rowsAdded = statement.executeUpdate();
-        
+
         return rowsAdded;
     }
-    
+
+    public boolean changePassword(String pwd) throws ClassNotFoundException, SQLException {
+        boolean flag = false;
+
+        Connection c = Database.getConnection();
+
+        PreparedStatement statement = c.prepareStatement("UPDATE login_info SET password=MD5(?) WHERE email_id=?");
+        statement.setString(1, pwd);
+        statement.setString(2, emailId);
+
+        int row = statement.executeUpdate();
+        if (row > 0) {
+            flag = true;
+        }
+
+        return flag;
+    }
+
 }
