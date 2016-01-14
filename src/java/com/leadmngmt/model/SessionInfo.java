@@ -65,7 +65,11 @@ public class SessionInfo {
         userId = null;
         userRole = 0;
         id = null;
-
+        
+        if(session == null){
+            return "";
+        }
+        
         /**
          * If user exists and user role exists set it to its corresponding attributes*
          */

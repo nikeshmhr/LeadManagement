@@ -124,7 +124,7 @@ public class Counsellor extends Staff {
             String semester = rs.getString("semester");
             String counsellorId = rs.getString("counsellor_id");
             boolean gender = rs.getBoolean("gender");
-            
+            int leadId = rs.getInt("id");
             
             Counsellor counsellor = new Counsellor();
             counsellor.setId(id);
@@ -142,6 +142,7 @@ public class Counsellor extends Staff {
             lead.setSemester(semester);
             lead.setStatus(new Status(studentStatusId));
             lead.setDateOfEntry(doe);
+            lead.setId(leadId);
             
             listOfLead.add(lead);
         }
@@ -149,4 +150,53 @@ public class Counsellor extends Staff {
         return listOfLead;
     }
 
+    public List<Lead> getListOfNewLeads() throws SQLException, ClassNotFoundException{
+        List<Lead> leads = new ArrayList<Lead>();
+        
+        Connection c = Database.getConnection();
+        
+        PreparedStatement st = c.prepareStatement("SELECT * FROM lead_info WHERE counsellor_id=? AND is_old=?");
+        st.setString(1, getId());
+        st.setBoolean(2, false);
+        
+        ResultSet rs = st.executeQuery();
+        while(rs.next()){
+            String email = rs.getString("email_id");
+            String name = rs.getString("name");
+            String phone = rs.getString("phone");
+            Date dob = rs.getDate("date_of_birth");
+            Date doe = rs.getDate("date_of_entry");
+            //String doe = rs.getString("date_of_entry");
+            int facultyId = rs.getInt("faculty_id");
+            int studentStatusId = rs.getInt("student_status_id");
+            int followupCount = rs.getInt("followup_count");
+            String semester = rs.getString("semester");
+            String counsellorId = rs.getString("counsellor_id");
+            boolean gender = rs.getBoolean("gender");
+            int leadId = rs.getInt("id");
+            
+            Counsellor counsellor = new Counsellor();
+            counsellor.setId(id);
+            
+            Lead lead = new Lead();
+            
+            lead.setCounselor(counsellor);
+            lead.setDateOfBirth(dob);
+            lead.setEmail(email);
+            lead.setFaculty(new Faculty(facultyId));
+            lead.setFollowupCount(followupCount);
+            lead.setGender(gender);
+            lead.setName(name);
+            lead.setPhone(phone);
+            lead.setSemester(semester);
+            lead.setStatus(new Status(studentStatusId));
+            lead.setDateOfEntry(doe);
+            lead.setId(leadId);
+            
+            leads.add(lead);
+        }
+        
+        return leads;
+    }
+    
 }
