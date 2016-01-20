@@ -5,8 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -85,33 +89,34 @@ public class Counsellor extends Staff {
 
         return rowsInserted;
     }
-    
-    public int updateCounsellor() throws ClassNotFoundException, SQLException{
+
+    public int updateCounsellor() throws ClassNotFoundException, SQLException {
         int rowsUpdated = 0;
-        
+
         Connection connection = Database.getConnection();
-        
+
         PreparedStatement s = connection.prepareStatement("UPDATE counsellor SET no_of_current_leads=?, max_no_of_leads=?, faculty_id=? WHERE id=?");
         s.setInt(1, getCurrentNoOfLeads());
         s.setInt(2, getMaxNoOfLeads());
         s.setInt(3, getFaculty().getFacultyId());
         s.setString(4, getId());
-        
+
         rowsUpdated = s.executeUpdate();
-        
+
         return rowsUpdated;
     }
-    
-    public List<Lead> getListOfLeads() throws ClassNotFoundException, SQLException{
+
+    public List<Lead> getListOfLeads() throws ClassNotFoundException, SQLException {
         List<Lead> listOfLead = new ArrayList<Lead>();
-        
+
         Connection c = Database.getConnection();
-        
-        PreparedStatement st = c.prepareStatement("SELECT * FROM lead_info WHERE counsellor_id=?");
+
+        PreparedStatement st = c.prepareStatement("SELECT * FROM lead_info WHERE counsellor_id=? AND student_status_id=?");
         st.setString(1, getId());
-        
+        st.setInt(2, Status.INTERESTED);
+
         ResultSet rs = st.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
             String email = rs.getString("email_id");
             String name = rs.getString("name");
             String phone = rs.getString("phone");
@@ -125,12 +130,13 @@ public class Counsellor extends Staff {
             String counsellorId = rs.getString("counsellor_id");
             boolean gender = rs.getBoolean("gender");
             int leadId = rs.getInt("id");
-            
+            Date followUp = rs.getDate("next_followup");
+
             Counsellor counsellor = new Counsellor();
             counsellor.setId(id);
-            
+
             Lead lead = new Lead();
-            
+
             lead.setCounselor(counsellor);
             lead.setDateOfBirth(dob);
             lead.setEmail(email);
@@ -143,24 +149,26 @@ public class Counsellor extends Staff {
             lead.setStatus(new Status(studentStatusId));
             lead.setDateOfEntry(doe);
             lead.setId(leadId);
-            
+            lead.setNextFollowup(followUp);
+
             listOfLead.add(lead);
         }
-        
+
         return listOfLead;
     }
 
-    public List<Lead> getListOfNewLeads() throws SQLException, ClassNotFoundException{
+    public List<Lead> getListOfNewLeads() throws SQLException, ClassNotFoundException {
         List<Lead> leads = new ArrayList<Lead>();
-        
+
         Connection c = Database.getConnection();
-        
-        PreparedStatement st = c.prepareStatement("SELECT * FROM lead_info WHERE counsellor_id=? AND is_old=?");
+
+        PreparedStatement st = c.prepareStatement("SELECT * FROM lead_info WHERE counsellor_id=? AND is_old=? AND student_status_id=?");
         st.setString(1, getId());
         st.setBoolean(2, false);
-        
+        st.setInt(3, Status.INTERESTED);
+
         ResultSet rs = st.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
             String email = rs.getString("email_id");
             String name = rs.getString("name");
             String phone = rs.getString("phone");
@@ -174,12 +182,12 @@ public class Counsellor extends Staff {
             String counsellorId = rs.getString("counsellor_id");
             boolean gender = rs.getBoolean("gender");
             int leadId = rs.getInt("id");
-            
+
             Counsellor counsellor = new Counsellor();
             counsellor.setId(id);
-            
+
             Lead lead = new Lead();
-            
+
             lead.setCounselor(counsellor);
             lead.setDateOfBirth(dob);
             lead.setEmail(email);
@@ -192,11 +200,62 @@ public class Counsellor extends Staff {
             lead.setStatus(new Status(studentStatusId));
             lead.setDateOfEntry(doe);
             lead.setId(leadId);
-            
+
             leads.add(lead);
         }
-        
+
         return leads;
     }
-    
+
+    public List<Lead> getListToFollowupToday() throws SQLException, ClassNotFoundException, ParseException {
+        List<Lead> listOfLeads = new ArrayList<Lead>();
+
+        Connection c = Database.getConnection();
+        PreparedStatement s = c.prepareStatement("SELECT * FROM lead_info WHERE next_followup=? AND counsellor_id=? AND student_status_id=?");
+
+        GregorianCalendar gCalendar = new GregorianCalendar();
+
+        String dateString = gCalendar.get(Calendar.YEAR) + "-" + (gCalendar.get(Calendar.MONTH) + 1) + "-" + gCalendar.get(GregorianCalendar.DAY_OF_MONTH);
+        System.out.println("DATE TO PARSSE: " + dateString);
+        Date dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+
+        //s.setDate(1, (java.sql.Date)dateUtil);
+        s.setString(1, dateString);
+        s.setString(2, this.getId());
+        s.setInt(3, Status.INTERESTED);
+        ResultSet rs = s.executeQuery();
+
+        while (rs.next()) {
+            Lead l = new Lead();
+
+            l.setId(rs.getInt("id"));
+            l.setEmail(rs.getString("email_id"));
+            l.setName(rs.getString("name"));
+            l.setPhone(rs.getString("phone"));
+            l.setDateOfBirth(rs.getDate("date_of_birth"));
+            l.setDateOfEntry(rs.getDate("date_of_entry"));
+            l.setFaculty(new Faculty(rs.getInt("faculty_id")));
+            l.setStatus(new Status(rs.getInt("student_status_id")));
+            l.setFollowupCount(rs.getInt("followup_count"));
+            l.setCounselor(this);
+            l.setSemester(rs.getString("semester"));
+            l.setGender(rs.getBoolean("gender"));
+            l.setNextFollowup(rs.getDate("next_followup"));
+
+            listOfLeads.add(l);
+        }
+        System.out.println("LIST TO FOLLOW: " + listOfLeads);
+        return listOfLeads;
+    }
+
+    public void setNewLeadsToOld() throws ClassNotFoundException, SQLException {
+        Connection c = Database.getConnection();
+        PreparedStatement statement = c.prepareStatement("UPDATE lead_info SET is_old=? WHERE is_old=? AND counsellor_id=?");
+        statement.setBoolean(1, true);
+        statement.setBoolean(2, false);
+        statement.setString(3, this.getId());
+        
+        statement.executeUpdate();
+    }
+
 }

@@ -96,20 +96,12 @@ public class AdministratorController {
 
     @RequestMapping(value = "/administrator/updateUser", method = RequestMethod.GET)
     public String showDefaultUpdatePage(ModelMap map) {
-        try {
-            List<Staff> existingUsers = DataAccessObject.getExistingUsers();
-            System.out.println("existing user" + existingUsers);
-            map.addAttribute("allUsers", existingUsers);
-        } catch (ClassNotFoundException ex) {
-            map.addAttribute("message", "Exception: Internal driver error.");
-        } catch (SQLException ex) {
-            map.addAttribute("message", "Exception: Internal sql error.");
-        }
+        setUserInfoIntoMap(map);
         return "/administrator/admin_update_user";
     }
 
     @RequestMapping(value = "/administrator/updateUserInfo", method = RequestMethod.POST)
-    public void updateUserInformation(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String updateUserInformation(HttpServletRequest request, HttpServletResponse response, ModelMap map) throws IOException {
         String userId = request.getParameter("userId");
         String emailId = request.getParameter("email");
         String name = request.getParameter("name");
@@ -126,23 +118,24 @@ public class AdministratorController {
         int rows = 0;
         try {
             rows = staff.updateUser();
+            setUserInfoIntoMap(map);
         } catch (ClassNotFoundException ex) {
-            request.setAttribute("message", "Exception: Internal driver error.");
+            map.addAttribute("message", "Exception: Internal driver error.");
         } catch (SQLException ex) {
-            request.setAttribute("message", "Exception: Internal sql error.");
+            map.addAttribute("message", "Exception: Internal sql error.");
         }
 
         if (rows > 0) {
-            request.setAttribute("message", "User deleted successfully.");
+            map.addAttribute("message", "User updated successfully.");
         } else {
-            request.setAttribute("message", "Cannot delete user.");
+            map.addAttribute("message", "Cannot update user.");
         }
-
-        response.sendRedirect("/LeadManagement/administrator/updateUser");
+        return "/administrator/admin_update_user";
+        //response.sendRedirect("/LeadManagement/administrator/updateUser");
     }
 
     @RequestMapping(value = "/administrator/deleteUser", method = RequestMethod.GET)
-    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String deleteUser(HttpServletRequest request, HttpServletResponse response, ModelMap map) throws IOException {
 
         String id = request.getParameter("id");
 
@@ -152,19 +145,19 @@ public class AdministratorController {
         int rowsModified = 0;
         try {
             rowsModified = info.deleteUser();
+            setUserInfoIntoMap(map);
         } catch (ClassNotFoundException ex) {
-            request.setAttribute("message", "Exception: Internal driver error.");
+            map.addAttribute("message", "Exception: Internal driver error.");
         } catch (SQLException ex) {
-            request.setAttribute("message", "Exception: Internal sql error.");
+            map.addAttribute("message", "Exception: Internal sql error.");
         }
 
         if (rowsModified > 0) {
-            request.setAttribute("message", "User deleted successfully.");
+            map.addAttribute("message", "User deleted successfully.");
         } else {
-            request.setAttribute("message", "Cannot delete user.");
+            map.addAttribute("message", "Cannot delete user.");
         }
-
-        response.sendRedirect("/LeadManagement/administrator/updateUser");
+        return "/administrator/admin_update_user";
     }
 
     private String getGeneratedId() throws SQLException, ClassNotFoundException {
@@ -212,5 +205,23 @@ public class AdministratorController {
         }
 
         return password;
+    }
+
+    /**
+     * Reads existing users from database and makes a list and sets the list to
+     * the ModelMap object as an attribute.
+     *
+     * @param map
+     */
+    private void setUserInfoIntoMap(ModelMap map) {
+        try {
+            List<Staff> existingUsers = DataAccessObject.getExistingUsers();
+            //System.out.println("existing user" + existingUsers);
+            map.addAttribute("allUsers", existingUsers);
+        } catch (ClassNotFoundException ex) {
+            map.addAttribute("message", "Exception: Internal driver error.");
+        } catch (SQLException ex) {
+            map.addAttribute("message", "Exception: Internal sql error.");
+        }
     }
 }

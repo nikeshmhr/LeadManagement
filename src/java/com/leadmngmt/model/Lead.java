@@ -5,9 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -22,6 +23,7 @@ public class Lead {
     private String email;
     private Date dateOfBirth;
     private Date dateOfEntry;
+    private Date nextFollowup;
     private Faculty faculty;
     private Status status;
     private int followupCount;
@@ -140,9 +142,14 @@ public class Lead {
     public void setId(int id) {
         this.id = id;
     }
-    
-    
-    
+
+    public Date getNextFollowup() {
+        return nextFollowup;
+    }
+
+    public void setNextFollowup(Date nextFollowup) {
+        this.nextFollowup = nextFollowup;
+    }
 
     public boolean addLead() throws ClassNotFoundException, SQLException {
         boolean addStatus = false;
@@ -154,7 +161,7 @@ public class Lead {
         Connection c = Database.getConnection();
 
         PreparedStatement s = c.prepareStatement("INSERT INTO lead_info VALUES(null, ?, ?, "
-                + "?, ?, SYSDATE(), ?, ?, ?, ?, ?, ?)");
+                + "?, ?, SYSDATE(), ?, ?, ?, ?, ?, ?, ?, 0)");
         //PreparedStatement s = c.prepareStatement("INSERT INTO sample VALUES('nikesh', SYSDATE())");
         //s.setDate(1, new java.sql.Date(getDateOfBirth().getTime()));
         s.setString(1, getEmail());
@@ -168,12 +175,13 @@ public class Lead {
         s.setInt(6, getStatus().getStatusId());
         s.setInt(7, getFollowupCount());
         s.setString(8, getSemester());
-        System.out.println("BEFORE METHOD CALL");
+        //System.out.println("BEFORE METHOD CALL");
         String counsellorId = getCounsellorId();
-        System.out.println("AFTER METHOD CALL");
-        System.out.println(counsellorId);
+        //System.out.println("AFTER METHOD CALL");
+        //System.out.println(counsellorId);
         s.setString(9, counsellorId);
         s.setBoolean(10, isGender());
+        s.setDate(11, new java.sql.Date(getNextFollowup().getTime()));
 
         if (s.executeUpdate() > 0 && getCounselor().updateCounsellor() > 0) {
             addStatus = true;
@@ -183,65 +191,68 @@ public class Lead {
     }
 
     /**
-     * Reads all the list of counsellor available in database and applies algorithm to determine the appropriate councellor and assigns to the lead.
+     * Reads all the list of counsellor available in database and applies
+     * algorithm to determine the appropriate councellor and assigns to the
+     * lead.
+     *
      * @return The selected counsellor's ID.
      * @throws ClassNotFoundException
-     * @throws SQLException 
+     * @throws SQLException
      */
     private String getCounsellorId() throws ClassNotFoundException, SQLException {
         String counsellorId = null;
         int loopCount = 0;
-        
+
         List<Counsellor> listOfCounsellors = new ArrayList<Counsellor>();
-        
+
         int noOfCounsellor = 0;
-        
+
         Connection c = Database.getConnection();
         PreparedStatement statement = c.prepareStatement("SELECT * FROM counsellor");
         ResultSet rs = statement.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
             String id = rs.getString("id");
             int noOfCurrentLeads = rs.getInt("no_of_current_leads");
             int maxNoOfLeads = rs.getInt("max_no_of_leads");
             int facultyId = rs.getInt("faculty_id");
-            
+
             Counsellor counsellor = new Counsellor(maxNoOfLeads, noOfCurrentLeads, facultyId, id);
-            
+
             listOfCounsellors.add(counsellor);
-            
+
             noOfCounsellor++;
         }
-        
-        while(getCounselor().getId().isEmpty() && (loopCount < (2 * noOfCounsellor))){
-            int randomNumber = (int)(Math.random() * noOfCounsellor);
+
+        while (getCounselor().getId().isEmpty() && (loopCount < (2 * noOfCounsellor))) {
+            int randomNumber = (int) (Math.random() * noOfCounsellor);
             System.out.println("RAND 1 " + randomNumber);
             Counsellor counsellor = listOfCounsellors.get(randomNumber);
-            if(counsellor.getMaxNoOfLeads() > counsellor.getCurrentNoOfLeads()){
+            if (counsellor.getMaxNoOfLeads() > counsellor.getCurrentNoOfLeads()) {
                 setCounselor(counselor);
                 counsellor.setCurrentNoOfLeads(counsellor.getCurrentNoOfLeads() + 1);
                 counsellorId = counsellor.getId();
             }
             loopCount++;
         }
-        
-        if(getCounselor().getId().isEmpty()){
+
+        if (getCounselor().getId().isEmpty()) {
             int randomNo = (int) (Math.random() * noOfCounsellor);
             System.out.println("RAND 2 " + randomNo);
             Counsellor coun = listOfCounsellors.get(randomNo);
             setCounselor(coun);
             counsellorId = coun.getId();
         }
-        
+
         return counsellorId;
     }
-    
-    public Lead getDetailsUsingId() throws ClassNotFoundException, SQLException{
+
+    public Lead getDetailsUsingId() throws ClassNotFoundException, SQLException {
         Connection c = Database.getConnection();
         PreparedStatement s = c.prepareStatement("SELECT * FROM lead_info WHERE id=?");
         s.setInt(1, getId());
-        
+
         ResultSet rs = s.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
             this.setEmail(rs.getString("email_id"));
             this.setFaculty(new Faculty(rs.getInt("faculty_id")));
             this.setStatus(new Status(rs.getInt("student_status_id")));
@@ -252,10 +263,63 @@ public class Lead {
             this.setGender(rs.getBoolean("gender"));
             this.setDateOfBirth(rs.getDate("date_of_birth"));
             this.setDateOfEntry(rs.getDate("date_of_entry"));
+            this.setNextFollowup(rs.getDate("next_followup"));
             break;
         }
-                
-        
+
         return this;
+    }
+
+    public boolean followUpNotDone() throws ClassNotFoundException, SQLException {
+        boolean status = false;
+
+        Connection c = Database.getConnection();
+        PreparedStatement s = c.prepareStatement("UPDATE lead_info SET next_followup=? WHERE id=?");
+
+        GregorianCalendar gCalendar = new GregorianCalendar();
+        final int ONE_DAY = 1;
+        gCalendar.add(Calendar.DAY_OF_MONTH, ONE_DAY);
+
+        String newDate = gCalendar.get(Calendar.YEAR) + "-" + (gCalendar.get(Calendar.MONTH) + 1) + "-" + gCalendar.get(GregorianCalendar.DAY_OF_MONTH);
+
+        s.setString(1, newDate);
+        s.setInt(2, this.getId());
+
+        if (s.executeUpdate() > 0) {
+            status = true;
+        }
+
+        return status;
+    }
+
+    public int updateLeadFollowup() throws ClassNotFoundException, SQLException {
+        int row = 0;
+
+        Connection c = Database.getConnection();
+
+        if (this.getFollowupCount() == 7) {
+            setStatus(new Status(Status.EXPIRED));
+        }
+
+        /**
+         * GENERATING NEXT FOLLOWUP DAY *
+         */
+        final int ONE_WEEK = 7;
+        GregorianCalendar gCalendar = new GregorianCalendar();
+        gCalendar.add(Calendar.DAY_OF_MONTH, ONE_WEEK);
+
+        String nextFollowUp = gCalendar.get(Calendar.YEAR) + "-" + (gCalendar.get(Calendar.MONTH) + 1) + "-" + gCalendar.get(GregorianCalendar.DAY_OF_MONTH);
+
+        PreparedStatement s = c.prepareStatement("UPDATE lead_info SET student_status_id=?, followup_count=?, next_followup=? WHERE id=?");
+        s.setInt(1, this.getStatus().getStatusId());
+        s.setInt(2, this.getFollowupCount() + 1);
+        s.setString(3, nextFollowUp);
+        s.setInt(4, id);
+
+        System.out.println("NEXT DATE: " + nextFollowUp);
+
+        row = s.executeUpdate();
+
+        return row;
     }
 }

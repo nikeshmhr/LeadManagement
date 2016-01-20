@@ -71,7 +71,7 @@
                 <!-- This label is out of the table  because of the table's hover property. The hover property doesn't show on this label now.-->
                 <h3>Existing User Information</h3>
 
-                <c:out value="${message}" />
+                <c:out value="Msg: ${message}" />
 
                 <div class="row">
                     <div class="col-sm-6">
