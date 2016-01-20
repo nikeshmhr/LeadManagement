@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2016 at 06:12 AM
+-- Generation Time: Jan 20, 2016 at 10:40 AM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
@@ -38,6 +38,16 @@ CREATE TABLE IF NOT EXISTS `counsellor` (
   KEY `id` (`id`),
   KEY `id_2` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `counsellor`
+--
+
+INSERT INTO `counsellor` (`id`, `no_of_current_leads`, `max_no_of_leads`, `faculty_id`) VALUES
+('ST102', 6, 8, 1),
+('ST103', 0, 8, 2),
+('ST104', 4, 8, 3),
+('ST105', 3, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -98,13 +108,15 @@ CREATE TABLE IF NOT EXISTS `lead_info` (
   `semester` varchar(50) NOT NULL,
   `counsellor_id` varchar(255) NOT NULL,
   `gender` tinyint(1) NOT NULL,
+  `next_followup` date NOT NULL,
+  `is_old` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_id` (`email_id`),
   KEY `faculty_id` (`faculty_id`,`student_status_id`),
   KEY `counsellor_email_id` (`counsellor_id`),
   KEY `student_status_id` (`student_status_id`),
   KEY `counsellor_id` (`counsellor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 -- --------------------------------------------------------
 
@@ -129,7 +141,11 @@ CREATE TABLE IF NOT EXISTS `login_info` (
 
 INSERT INTO `login_info` (`id`, `password`, `role`, `email_id`) VALUES
 ('ST101', '21232f297a57a5a743894a0e4a801fc3', 1, 'admin@gmail.com'),
-('ST102', '2a9a148783ba0837800106b161bcfb3e', 3, 'bip@gmail.com');
+('ST102', 'd93bea4c204c506cd3825c16020d3f10', 2, 'bip@gmail.com'),
+('ST103', '1158f5f8d240a731d28068742adea0fd', 2, 'sus@gmail.com'),
+('ST104', 'ba432ee0753bdd9128d2a05a0481d871', 2, 'aj@gmail.com'),
+('ST105', '1f0c281a1508da2c1f19165ad4a592fb', 2, 'nks@gmail.com'),
+('ST106', '4af5cab77c62eaec5f87b570f2d2b127', 3, 'mona@darling.com');
 
 -- --------------------------------------------------------
 
@@ -196,7 +212,11 @@ CREATE TABLE IF NOT EXISTS `staff_info` (
 
 INSERT INTO `staff_info` (`id`, `name`, `gender`, `role_id`) VALUES
 ('ST101', 'Nikesh Maharjan', 1, 1),
-('ST102', 'Bipal Woman Shakya', 0, 3);
+('ST102', 'Bipal Shakya', 1, 2),
+('ST103', 'Sushant Lal', 1, 2),
+('ST104', 'Ajeeja', 1, 2),
+('ST105', 'Nikesh', 1, 2),
+('ST106', 'Mona Lisa', 0, 3);
 
 -- --------------------------------------------------------
 

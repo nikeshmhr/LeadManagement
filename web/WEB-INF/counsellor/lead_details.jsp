@@ -44,6 +44,7 @@
         Semester: <c:out value="${lead.semester}" /><br/>
         Gender: <c:choose><c:when test="${lead.gender}">Male</c:when><c:otherwise>Female</c:otherwise></c:choose> <br/>
         DOB: <c:out value="${lead.dateOfBirth}" /><br/>
-        DOE: <c:out value="${lead.dateOfEntry}" />
+        DOE: <c:out value="${lead.dateOfEntry}" /><br/>
+        Next followup date: <c:out value="${lead.nextFollowup}" />
     </body>
 </html>

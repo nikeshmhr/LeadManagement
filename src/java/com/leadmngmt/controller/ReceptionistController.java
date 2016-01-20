@@ -7,7 +7,9 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -40,10 +42,18 @@ public class ReceptionistController {
             String name = request.getParameter("name");
             String email = request.getParameter("email_id");
             String phone = request.getParameter("phone");
-
             String dateString = request.getParameter("date_of_birth");
+            final int ONE_WEEK = 7;
+            
+            GregorianCalendar gCalendar = new GregorianCalendar();
+            int currentDayNumber = gCalendar.get(Calendar.DAY_OF_MONTH);
+            gCalendar.add(Calendar.DAY_OF_MONTH, ONE_WEEK);
+            
+            String nextFollowUp = gCalendar.get(Calendar.YEAR) + "-" + (gCalendar.get(Calendar.MONTH)+1) + "-" + gCalendar.get(GregorianCalendar.DAY_OF_MONTH);
+            
 
             Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+            Date followUp = new SimpleDateFormat("yyyy-MM-dd").parse(nextFollowUp);
 
             int faculty = Integer.parseInt(request.getParameter("Faculty"));
             String semester = request.getParameter("semester");
@@ -57,7 +67,10 @@ public class ReceptionistController {
             lead.setFaculty(new Faculty(faculty));
             lead.setSemester(semester);
             lead.setGender(gender);
+            lead.setNextFollowup(followUp);
 
+            System.out.println("NEXT FOLLOW UP: " + nextFollowUp);
+            
             boolean addStatus = lead.addLead();
             if (addStatus) {
                 map.addAttribute("message", "Lead successfully added");

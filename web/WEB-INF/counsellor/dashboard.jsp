@@ -39,7 +39,8 @@
         <div id="container">
             <%@include file="../menus.jsp" %>
 
-            <a href="/LeadManagement/counsellor/leads">List of leads (new)</a>
+            <a href="/LeadManagement/counsellor/leads">List of leads (new)</a><br/>
+            <a href="/LeadManagement/counsellor/lead/followupToday">Leads to followup today</a>
 
             <table class="table table-hover">
                 <caption><h1>List of leads</h1></caption>
@@ -55,7 +56,9 @@
                 </thead>
 
                 <tbody>
+                    <c:set var="emptyRow" value="true" />
                     <c:forEach var="lead" items="${leads}">
+                        <c:set value="false" var="emptyRow" />
                         <tr>                            
                             <td>
                                 <a href="/LeadManagement/counsellor/lead/details?id=<c:out value='${lead.id}' />">
@@ -70,6 +73,11 @@
                         </tr>
                     </c:forEach>
                 </tbody>
+                <c:if test="${emptyRow eq true}">
+                    <tr>
+                        <td colspan="6" style="text-align: center">No leads</td>
+                    </tr>
+                </c:if>
             </table>
         </div>
 

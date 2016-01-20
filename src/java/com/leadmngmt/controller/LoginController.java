@@ -41,7 +41,7 @@ public class LoginController {
                 session.setAttribute("userId", login.getEmailId());
                 session.setAttribute("userRole", login.getRole().getRoleId());
                 session.setAttribute("id", login.getId());
-                
+
                 session.setMaxInactiveInterval(5 * 60);  // session valid only for 5 minutes
 
                 if (login.getRole().getRoleId() == Role.ADMIN) {
@@ -70,26 +70,16 @@ public class LoginController {
         } catch (SQLException ex) {
             map.addAttribute("errorMessage", "Login Failed: " + ex.getMessage());
             return "index";
-        } 
+        }
         return null;
-    }
-
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public String logout(HttpServletRequest req) {
-        HttpSession session = req.getSession(false);
-        session.invalidate();
-        /*if (req.getParameter("action").equals("true")) {
-         session.setAttribute("userId", null);
-         session.setAttribute("userRole", 0);
-         }*/
-
-        //System.out.println("I'll always destroy session.");
-        return "index";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logoutGet(HttpServletRequest req) {
-        System.out.println("Came throught GET request ..... argggh");
-        return logout(req);
+        HttpSession session = req.getSession();
+        System.out.println("SESSION: " + session.isNew());
+
+        session.invalidate();
+        return "index";
     }
 }
