@@ -4,6 +4,7 @@ import com.leadmngmt.model.Counsellor;
 import com.leadmngmt.model.Feedback;
 import com.leadmngmt.model.Lead;
 import com.leadmngmt.model.SessionInfo;
+import com.leadmngmt.model.Status;
 import com.leadmngmt.util.Database;
 import java.io.IOException;
 import java.sql.Connection;
@@ -108,37 +109,61 @@ public class CounsellorController {
         setLeadsForToday(map, req);
         return "/counsellor/lead_followup_today";
     }
-    
-    @RequestMapping(value="/counsellor/lead/followupDone", method=RequestMethod.POST)
-    public String updateFollowupInfo(HttpServletRequest req, ModelMap map){
+
+    @RequestMapping(value = "/counsellor/lead/followupDone", method = RequestMethod.POST)
+    public String updateFollowupInfo(HttpServletRequest req, ModelMap map) {
         try {
             int leadId = Integer.parseInt(req.getParameter("leadId"));
             String feedback = req.getParameter("feedback");
             int status = Integer.parseInt(req.getParameter("status"));
-            
+
             int followupCount = Integer.parseInt(req.getParameter("followupCount"));
-            
-            /** CREATING NEW LEAD FROM AVAILABLE ATTRIBUTES **/
+
+            /**
+             * CREATING NEW LEAD FROM AVAILABLE ATTRIBUTES *
+             */
             Lead l = new Lead();
             l.setId(leadId);
+            l.setStatus(new Status(status));
             l.setFollowupCount(followupCount);
             Feedback f = new Feedback(req.getParameter("feedback"));
-            
+
             int rows = f.addFeedback(leadId);
-            if(rows > 0){
+            if (rows > 0) {
                 rows = l.updateLeadFollowup();
-                if(rows > 0){
+                if (rows > 0) {
                     map.addAttribute("message", "Lead updated.");
-                }else{
+                } else {
                     map.addAttribute("message", "Sorry, could not update followup");
                 }
-            }else{
+            } else {
                 map.addAttribute("message", "Sorry, could not update. (Error while adding feedback)");
             }
         } catch (ClassNotFoundException ex) {
             map.addAttribute("message", "Driver not found.");
         } catch (SQLException ex) {
             map.addAttribute("message", "SQL error. " + ex.getMessage());
+        }
+        setLeadsForToday(map, req);
+        return "/counsellor/lead_followup_today";
+    }
+
+    @RequestMapping(value = "/counsellor/lead/sendForAdmission", method = RequestMethod.POST)
+    public String sentLeadForAdmission(HttpServletRequest req, HttpServletResponse res, ModelMap map) {
+        try {
+            int leadId = Integer.parseInt(req.getParameter("leadIdAgain"));
+            Lead l = new Lead();
+            l.setId(leadId);
+
+            int status = l.sendLeadForAdmission();
+
+            if(status > 0){
+                map.addAttribute("message", "Lead successfully sent for admission.");
+            }
+        } catch (ClassNotFoundException ex) {
+            map.addAttribute("message", "Driver error.");
+        } catch (SQLException ex) {
+            map.addAttribute("message", "SQL error.");
         }
         setLeadsForToday(map, req);
         return "/counsellor/lead_followup_today";
@@ -166,8 +191,10 @@ public class CounsellorController {
     }
 
     /**
-     * Reads leads info from database whose followup date is equal to today and add that info to the list.
-     * Finally adds the list to the ModelMap before sending it the view.
+     * Reads leads info from database whose followup date is equal to today and
+     * add that info to the list. Finally adds the list to the ModelMap before
+     * sending it the view.
+     *
      * @param map List of leads are bundled here and are sent.
      * @param req The request object from the page.
      */
