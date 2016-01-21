@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 20, 2016 at 10:40 AM
+-- Generation Time: Jan 20, 2016 at 06:35 PM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.16
 
@@ -44,10 +44,10 @@ CREATE TABLE IF NOT EXISTS `counsellor` (
 --
 
 INSERT INTO `counsellor` (`id`, `no_of_current_leads`, `max_no_of_leads`, `faculty_id`) VALUES
-('ST102', 6, 8, 1),
-('ST103', 0, 8, 2),
+('ST102', 7, 8, 1),
+('ST103', 6, 8, 2),
 ('ST104', 4, 8, 3),
-('ST105', 3, 8, 1);
+('ST105', 6, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -87,7 +87,15 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   KEY `lead_email_id` (`lead_id`),
   KEY `lead_id` (`lead_id`),
   KEY `lead_id_2` (`lead_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`feedback_id`, `feedback_text`, `lead_id`) VALUES
+(2, 'This is the first test feedback.', 28),
+(15, 'sfsdf\r\n', 28);
 
 -- --------------------------------------------------------
 
@@ -116,7 +124,16 @@ CREATE TABLE IF NOT EXISTS `lead_info` (
   KEY `counsellor_email_id` (`counsellor_id`),
   KEY `student_status_id` (`student_status_id`),
   KEY `counsellor_id` (`counsellor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+
+--
+-- Dumping data for table `lead_info`
+--
+
+INSERT INTO `lead_info` (`id`, `email_id`, `name`, `phone`, `date_of_birth`, `date_of_entry`, `faculty_id`, `student_status_id`, `followup_count`, `semester`, `counsellor_id`, `gender`, `next_followup`, `is_old`) VALUES
+(28, 'suresh@gmail.com', 'Suresh Shrestha', '1232131231', '1997-01-01', '2016-01-20', 2, 1, 2, 'S2', 'ST103', 1, '2016-01-27', 1),
+(29, 'malik@gmail.com', 'Malik Waters', '62324234234234', '1991-09-14', '2016-01-20', 3, 1, 0, 'A1', 'ST103', 0, '2016-01-20', 1),
+(32, 'a@a', 'R', '1', '2016-01-20', '2016-01-20', 4, 1, 0, 'S1', 'ST103', 0, '2016-01-21', 1);
 
 -- --------------------------------------------------------
 

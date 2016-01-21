@@ -267,6 +267,16 @@ public class Lead {
             break;
         }
 
+        s = c.prepareStatement("SELECT * FROM feedback WHERE lead_id=?");
+        s.setInt(1, this.getId());
+
+        rs = s.executeQuery();
+        while (rs.next()) {
+            Feedback f = new Feedback(rs.getInt("feedback_id"), rs.getString("feedback_text"));
+
+            this.getListOfFeedbacks().add(f);
+        }
+
         return this;
     }
 
@@ -319,6 +329,21 @@ public class Lead {
         System.out.println("NEXT DATE: " + nextFollowUp);
 
         row = s.executeUpdate();
+
+        return row;
+    }
+
+    public int sendLeadForAdmission() throws ClassNotFoundException, SQLException {
+        int row = 0;
+        
+        this.setStatus(new Status(Status.PENDING));
+
+        Connection c = Database.getConnection();
+        PreparedStatement st = c.prepareStatement("UPDATE lead_info SET student_status_id=? WHERE id=?");
+        st.setInt(1, Status.PENDING);
+        st.setInt(2, this.getId());
+
+        row = st.executeUpdate();
 
         return row;
     }

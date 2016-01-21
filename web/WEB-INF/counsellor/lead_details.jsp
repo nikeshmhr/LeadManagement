@@ -45,6 +45,13 @@
         Gender: <c:choose><c:when test="${lead.gender}">Male</c:when><c:otherwise>Female</c:otherwise></c:choose> <br/>
         DOB: <c:out value="${lead.dateOfBirth}" /><br/>
         DOE: <c:out value="${lead.dateOfEntry}" /><br/>
-        Next followup date: <c:out value="${lead.nextFollowup}" />
+        Next followup date: <c:out value="${lead.nextFollowup}" /><br/>
+        <h1>Feedbacks</h1>
+        <c:set var="count" value="1" />
+        <c:forEach var="feedback" items="${lead.listOfFeedbacks}">
+            <h4>Feedback <c:out value="${count}" /></h4>
+            <c:out value="${feedback.feedbackText}" /><br/>
+            <c:set var="count" value="${count + 1}" />
+        </c:forEach>
     </body>
 </html>

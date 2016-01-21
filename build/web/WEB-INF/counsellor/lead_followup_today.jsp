@@ -48,6 +48,7 @@
                     <th>Date of Entry</th>
                     <th>Followup Count</th>
                     <th>Followup done?</th>
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
 
@@ -65,6 +66,14 @@
                             <a href="#<c:out value='${lead.id}' />" data-toggle="modal">Yes</a>
                             |
                             <a href="/LeadManagement/counsellor/lead/followUpNotDone?id=<c:out value='${lead.id}' />">No</a>
+                        </td>
+                        <td>
+                            <form action="/LeadManagement/counsellor/lead/sendForAdmission" method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="leadIdAgain" value="<c:out value='${lead.id}' />" />
+                                    <input type="submit" value="Send for admission" class="btn btn-default btn-primary" />
+                                </div>
+                            </form>
                         </td>
                     </tr>
                 <div class="modal fade" tabindex="-1" role="dialog" id="<c:out value='${lead.id}' />">
@@ -106,6 +115,7 @@
                                         <input type="hidden" name="followupCount" value="<c:out value='${lead.followupCount}' />" />
                                         <textarea class="form-control" name="feedback" required placeholder="Write you comments here..." ></textarea>
                                     </div>
+                                    <!-- just for conversion -->
                                     <div class="modal-footer">
                                         <input type="hidden" name="action" value="update" />
                                         <button type="button" class="btn btn-danger" id="but" data-dismiss="modal">Close</button>

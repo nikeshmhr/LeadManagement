@@ -5,9 +5,8 @@
         <group>
             <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/web/WEB-INF/counsellor/dashboard.jsp</file>
             <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/model/Counsellor.java</file>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/web/WEB-INF/counsellor/lead_followup_today.jsp</file>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/web/WEB-INF/counsellor/lead_details.jsp</file>
             <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/controller/CounsellorController.java</file>
+            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/web/WEB-INF/counsellor/lead_details.jsp</file>
             <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/controller/ReceptionistController.java</file>
             <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/model/Lead.java</file>
             <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/model/Feedback.java</file>
