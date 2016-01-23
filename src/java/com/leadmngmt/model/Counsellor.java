@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class encapsulates the properties and characteristics of counselor.
@@ -157,6 +159,53 @@ public class Counsellor extends Staff {
         return listOfLead;
     }
 
+    public List<Lead> getListOfAllLeads() throws ClassNotFoundException, SQLException{
+        List<Lead> listOfLead = new ArrayList<Lead>();
+
+        Connection c = Database.getConnection();
+
+        PreparedStatement st = c.prepareStatement("SELECT * FROM lead_info WHERE counsellor_id=?");
+        st.setString(1, getId());
+
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            String email = rs.getString("email_id");
+            String name = rs.getString("name");
+            String phone = rs.getString("phone");
+            Date dob = rs.getDate("date_of_birth");
+            Date doe = rs.getDate("date_of_entry");
+            //String doe = rs.getString("date_of_entry");
+            int facultyId = rs.getInt("faculty_id");
+            int studentStatusId = rs.getInt("student_status_id");
+            int followupCount = rs.getInt("followup_count");
+            String semester = rs.getString("semester");
+            String counsellorId = rs.getString("counsellor_id");
+            boolean gender = rs.getBoolean("gender");
+            int leadId = rs.getInt("id");
+            Date followUp = rs.getDate("next_followup");
+
+            Lead lead = new Lead();
+
+            lead.setCounselor(this);
+            lead.setDateOfBirth(dob);
+            lead.setEmail(email);
+            lead.setFaculty(new Faculty(facultyId));
+            lead.setFollowupCount(followupCount);
+            lead.setGender(gender);
+            lead.setName(name);
+            lead.setPhone(phone);
+            lead.setSemester(semester);
+            lead.setStatus(new Status(studentStatusId));
+            lead.setDateOfEntry(doe);
+            lead.setId(leadId);
+            lead.setNextFollowup(followUp);
+
+            listOfLead.add(lead);
+        }
+
+        return listOfLead;
+    }
+    
     public List<Lead> getListOfNewLeads() throws SQLException, ClassNotFoundException {
         List<Lead> leads = new ArrayList<Lead>();
 
@@ -254,8 +303,50 @@ public class Counsellor extends Staff {
         statement.setBoolean(1, true);
         statement.setBoolean(2, false);
         statement.setString(3, this.getId());
-        
+
         statement.executeUpdate();
+    }
+
+    public int getNoOfNewLeads() throws SQLException, ClassNotFoundException {
+        int numberOfNewLeads = 0;
+        final int NO = 0;
+
+        Connection c = Database.getConnection();
+        PreparedStatement statement = c.prepareStatement("SELECT COUNT(*) AS count FROM lead_info WHERE counsellor_id=? AND is_old=?");
+        statement.setString(1, this.getId());
+        statement.setInt(2, NO);
+
+        ResultSet rs = statement.executeQuery();
+        while (rs.next()) {
+            numberOfNewLeads = rs.getInt("count");
+            break;
+        }
+
+        return numberOfNewLeads;
+    }
+
+    public int getNoOfLeadsToFollowupToday() throws ClassNotFoundException, SQLException, ParseException {
+        int numberOfLeadsToFollowup = 0;
+        
+        Connection c = Database.getConnection();
+        PreparedStatement s = c.prepareStatement("SELECT COUNT(*) AS count FROM lead_info WHERE next_followup=? AND counsellor_id=? AND student_status_id=?");
+
+        GregorianCalendar gCalendar = new GregorianCalendar();
+
+        String dateString = gCalendar.get(Calendar.YEAR) + "-" + (gCalendar.get(Calendar.MONTH) + 1) + "-" + gCalendar.get(GregorianCalendar.DAY_OF_MONTH);
+        System.out.println("DATE TO PARSSE: " + dateString);
+        Date dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+
+        s.setString(1, dateString);
+        s.setString(2, this.getId());
+        s.setInt(3, Status.INTERESTED);
+        ResultSet rs = s.executeQuery();
+        while(rs.next()){
+            numberOfLeadsToFollowup = rs.getInt("count");
+            break;
+        }
+        
+        return numberOfLeadsToFollowup;
     }
 
 }

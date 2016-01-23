@@ -1,34 +1,16 @@
+<%@page import="com.leadmngmt.model.Staff"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.leadmngmt.model.Role"%>
 <%@page import="com.leadmngmt.model.SessionInfo"%>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>LMS Reception</title>
 
-        <!-- Importing bootstrap framework jquery and javascrip from js/ -->
-        <script src="/LeadManagement/resources/js/jquery.min.js"></script>
-        <script src="/LeadManagement/resources/js/bootstrap.min.js"></script>
+<!DOCTYPE html>
 
-        <!--Importing bootstrap min.css framework-->
-
-        <link href="/LeadManagement/resources/css/bootstrap.min.css" rel="stylesheet">
-        <!--Importing custom overwriting css named style.css-->
-        <link href="/LeadManagement/resources/css/style.css" rel="stylesheet">
-        <!-- Linking the favicon icon-image -->
-        <link rel="icon" type="image/png" href="/LeadManagement/resources/images/favicon.png">
+<%@include file="../header.jsp" %>
 
 
-        <!-- Internal css for image logo -->
-        <style type="text/css">
-            img {
-                opacity: .3;
-            }
-        </style>
-    </head>
-    <body>
+    <body class="nav-md">
         <%@include file="../../resources/includes/functions.jsp" %>
+
         <%
             disableBrowserCache(response);
 
@@ -37,88 +19,259 @@
                 response.sendRedirect("/LeadManagement/login");
             }
         %>
-        <div class="container">
-            <%@include file="../menus.jsp" %>
-
-            <div class="welcome_text"> 
-                <h1 class="pull-right">
-                    Welcome, Receptionist
-                </h1>
-            </div>
-
-            <div class="clearfix"></div>
+        <div class="container body">
 
 
-            <div id="entry_form_container" class="col-md-8">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#">Add New Lead Information</a></li>
-                    <li><a href="/LeadManagement/receptionist/add/bulk">Add Information in Bulk</a></li>
-                </ul>                
+            <div class="main_container">
+
+                <div class="col-md-3 left_col">
+                    <div class="left_col scroll-view">
+
+                        <div class="navbar nav_title" style="border: 0;">
+                            <a href="#" class="site_title"><i class="fa fa-spinner"></i> <span>Islington</span></a>
+                        </div>
+                        <div class="clearfix"></div>
 
 
-                <div class="col-sm-6 pull-left" style="width:50%;">
-                    <span>${message}</span>
-                    <form method="POST" action="/LeadManagement/receptionist/add/postData">
-                        <table>
-                            <label><h3>New Lead Entry</h3></label>
-                            <tr>
-                                <td>Name: </td>
-                                <td><input type="text" name="name" placeholder="Name" required /></td>
-                            </tr>
-                            <tr>
-                                <td>Email ID: </td>
-                                <td><input type="email" name="email_id" placeholder="Email ID" required /></td>
-                            </tr>
-                            <tr>
-                                <td>Phone Number: </td>
-                                <td><input type="number" name="phone" placeholder="Phone Number" required /></td>
-                            </tr>
-                            <tr>
-                                <td>Date of Birth: </td>
-                                <td><input type="date" name="date_of_birth" required /></td>
-                            </tr>
-                            <tr>
-                                <td>Faculty:</td>
-                                <td>
-                                    <select name = "Faculty" required>
-                                        <option value="0">Select Major</option>
-                                        <option value="1">B.Sc. Computing</option>
-                                        <option value="2">B.Sc. Networking</option>
-                                        <option value="3">B.Sc. Multimedia</option>
-                                        <option value="4">B.B.A. Management</option>
-                                        <option value="5">M.Sc. IT</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Semester:</td>
-                                <td>
-                                    <input type="text" name="semester" placeholder="Semester" required />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Gender: </td>
-                                <td>
-                                    <input type="radio" value="true" name="gender" checked> Male
-                                    <input type="radio" value="false" name="gender"> Female
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <input type="submit" name="Submit">
-                                    <input type="reset" value="Clear">
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+                        <!-- menu prile quick info -->
+                        <div class="profile">
+                            <div class="profile_pic">
+                                <img src="/LeadManagement/resources/images/img.jpg" alt="..." class="img-circle profile_img">
+                            </div>
+                            <div class="profile_info">
+                                <span>Welcome,</span>
+                                <h2>
+                                <%String display_name = sessionInfo.getId();
+                                    Staff c = new Staff();
+                                    c.setId(display_name);
+                                    out.print(c.getNameForId());%>
+                            </h2>
+                            </div>
+                        </div>
+                        <!-- /menu prile quick info -->
+
+                        <br />
+
+                        <!-- sidebar menu -->
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+                            <div class="menu_section">
+                                <h3>Menu</h3>
+                                <ul class="nav side-menu">
+                                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu" style="display: none">
+                                            <li><a href="#">Add New Lead</a>
+                                            </li>
+                                            <li><a href="/LeadManagement/receptionist/add/bulk">Bulk Lead Entry</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- /sidebar menu -->
+                        <!-- Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                        Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                        Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                        Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                        Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                        Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here -->
+
+
+                        <!-- /menu footer buttons -->
+
+                        <!-- /menu footer buttons -->
+                    </div>
                 </div>
-            </div>
+
+                <!-- top navigation -->
+                <!-- /top navigation -->
+                <!-- top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation -->
+                
+                <%@include file="../navigation.jsp" %>
+                
+                <!-- /top navigation -->
+                <!-- top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation
+                top navigation top navigation top navigation top navigation top navigation -->
 
 
-            <div class="pull-right col-md-3">
-                <img src="/LeadManagement/resources/images/logo.jpg" height="150px" width="160px">
-            </div>
-        </div>
-    </body>
-</html>
+
+                <!-- page content -->
+                <!-- main form main form main form main form main form main form main form
+                main form main form main form main form main form main form main form
+                main form main form main form main form main form main form main form
+                main form main form main form main form main form main form main form
+                main form main form main form main form main form main form main form
+                main form main form main form main form main form main form main form
+                main form main form main form main form main form main form main form -->
+
+                <div class="right_col" role="main">
+
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_left">
+                                <h3></h3>
+                            </div>
+
+                            <div class="title_right">
+                                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+
+                                        <!-- admin page header admin page header admin page header admin page header admin page header admin page header
+                                        admin page header admin page header admin page header admin page header admin page header admin page header
+                                        admin page header admin page header admin page header admin page header admin page header admin page header
+                                        admin page header admin page header admin page header admin page header admin page header admin page header
+                                        admin page header admin page header admin page header admin page header admin page header admin page header
+                                        admin page header admin page header admin page header admin page header admin page header admin page header
+                                        admin page header admin page header admin page header admin page header admin page header admin page header -->
+
+                                        
+                                        <h2>Adding New Leads</h2>
+                                        <ul class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+
+                                        </ul>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+
+                                        <form class="form-horizontal form-label-left" novalidate method="POST" action="/LeadManagement/receptionist/add/postData">
+
+                                            <!-- add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                                add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                                add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                                add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                                add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                                add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                                add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header -->
+
+
+
+                                            <span class="section">Add New Leads</span>
+
+                                            <div class="item form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Bipal Shakya" required="required" type="text">
+                                                </div>
+                                            </div>
+
+                                            <div class="item form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input type="email" id="email" name="email_id" required="required" class="form-control col-md-7 col-xs-12">
+                                                </div>
+                                            </div>
+
+                                            <div class="item form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Phone Number: <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input type="number" name="phone" required="required" class="form-control col-md-7 col-xs-12">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input type="date" name="date_of_birth" required="required" type="text" >
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Faculty</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <select class="form-control" name = "Faculty" required>
+                                                        <option value="1">B.Sc. Computing</option>
+                                                        <option value="2">B.Sc. Networking</option>
+                                                        <option value="3">B.Sc. Multimedia</option>
+                                                        <option value="4">B.B.A. Management</option>
+                                                        <option value="5">M.Sc. IT</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Semester <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <select class="form-control" name = "semester" required>
+                                                        <option value="S">Spring</option>
+                                                        <option value="A">Autumn</option>
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender:</label>
+                                                <input type="radio" name="gender" value="true" checked> Male
+                                                <input type="radio" name="gender" value="false"> Female
+                                            </div>
+
+                                            <div>${message}
+                                            ${details}
+                                            </div>
+                                        
+                                            <div class="ln_solid"></div>
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-md-offset-3">
+                                                    
+                                                    <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                                    <button type="reset" class="btn btn-primary">Cancel</button>
+                                                </div>
+                                            </div>
+                                            <!-- form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                            form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                            form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                            form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                            form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                            form ends here form ends here form ends here form ends here form ends here form ends here form ends here  -->
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- footer content -->
+                    <!-- footer content footer content footer contentfooter contentfooter content footer content footer content
+                    footer content footer content footer contentfooter contentfooter content footer content footer content
+                    footer content footer content footer contentfooter contentfooter content footer content footer content
+                    footer content footer content footer contentfooter contentfooter content footer content footer content
+                    footer content footer content footer contentfooter contentfooter content footer content footer contentfooter
+                    footer content footer content footer contentfooter contentfooter content footer content footer content--> 
+                    <%@include file="../footer.jsp" %>

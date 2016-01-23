@@ -3,14 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/web/WEB-INF/counsellor/dashboard.jsp</file>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/model/Counsellor.java</file>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/controller/CounsellorController.java</file>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/web/WEB-INF/counsellor/lead_details.jsp</file>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/controller/ReceptionistController.java</file>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/model/Lead.java</file>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/src/java/com/leadmngmt/model/Feedback.java</file>
-            <file>file:/C:/Users/nilu/Documents/Netbeans%20Project/LeadManagement/web/WEB-INF/counsellor/leads_list.jsp</file>
+            <file>file:/C:/Users/nilu/Documents/LeadManagement/web/WEB-INF/receptionist/receptionist_bulk_lead_entry.jsp</file>
         </group>
     </open-files>
 </project-private>

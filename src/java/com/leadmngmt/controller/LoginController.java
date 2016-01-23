@@ -55,7 +55,7 @@ public class LoginController {
                     res.sendRedirect("/LeadManagement/counsellor/dashboard");
                 } else if (login.getRole().getRoleId() == Role.ADMISSION_OFFICER) {
                     //return "/admission_officer/dashboard";
-                    res.sendRedirect("/LeadManagement/admisssion_officer/dashboard");
+                    res.sendRedirect("/LeadManagement/admission_officer/dashboard");
                 } else {
                     //return "/top_management/dashboard";
                     res.sendRedirect("/LeadManagement/top_management/dashboard");

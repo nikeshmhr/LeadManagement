@@ -1,84 +1,218 @@
+<%@page import="com.leadmngmt.model.Staff"%>
 <%@page import="com.leadmngmt.model.SessionInfo"%>
 <%@page import="com.leadmngmt.model.Role"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>LMS Reception</title>
 
-        <!-- Importing bootstrap framework jquery and javascrip from js/ -->
-        <script src="/LeadManagement/resources/js/jquery.min.js"></script>
-        <script src="/LeadManagement/resources/js/bootstrap.min.js"></script>
-
-        <!--Importing bootstrap min.css framework-->
-        <link href="/LeadManagement/resources/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <!--Importing custom overwriting css named style.css-->
-        <link href="/LeadManagement/resources/css/style.css" rel="stylesheet" type="text/css">
-        <!-- Linking the favicon icon-image -->
-        <link rel="icon" type="image/png" href="/LeadManagement/resources/images/favicon.png" />        
-
-        <!-- Internal css for image logo -->
-        <style type="text/css">
-            img {
-                opacity: .3;
-            }
-        </style>
-    </head>
-    <body>
-        <%@include file="../../resources/includes/functions.jsp" %>
-        <%
-            disableBrowserCache(response);
-            
-            SessionInfo sessionInfo = new SessionInfo();
-            if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.RECEPTIONIST) {
-                response.sendRedirect("/LeadManagement/login");
-            }
-        %>
-        <div class="container">
-            <%@include file="../menus.jsp" %>
+<%@include file="../header.jsp" %>
 
 
-            <div class="clearfix"></div>
+<body class="nav-md">
+    <%@include file="../../resources/includes/functions.jsp" %>
+    <%
+        disableBrowserCache(response);
+
+        SessionInfo sessionInfo = new SessionInfo();
+        if (sessionInfo.redirectPage(request).isEmpty() || sessionInfo.getUserRoleId() != Role.RECEPTIONIST) {
+            response.sendRedirect("/LeadManagement/login");
+        }
+    %>
+    <div class="container body">
 
 
-            <div id="entry_form_container" class="col-md-8">
-                <ul class="nav nav-tabs">
-                    <li><a href="/LeadManagement/receptionist/add">Add New Lead Information</a></li>
-                    <li class="active"><a href="#">Add Information in Bulk</a></li>
-                </ul>
+        <div class="main_container">
 
-                <div class="col-sm-6 pull-left" style="width:50%;">
-                    <form method="POST" action="#">
-                        <table width="440px">
-                            <label><h3>Bulk Information File Upload</h3></label>
-                            <tr>
-                                <td>Choose file:<br>(File format: .csv)</td>
-                                <td>
-                                    <input type="file" name="bulk_file">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <input type="submit" name="Submit">
-                                    <input type="reset" value="Clear">
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="#" class="site_title"><i class="fa fa-spinner"></i> <span>Islington</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                    <!-- menu prile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+                            <img src="/LeadManagement/resources/images/img.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>
+                                <%String display_name = sessionInfo.getId();
+                                    Staff c = new Staff();
+                                    c.setId(display_name);
+                                    out.print(c.getNameForId());%>
+                            </h2>
+                        </div>
+                    </div>
+                    <!-- /menu prile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+                        <div class="menu_section">
+                            <h3>Menu</h3>
+                            <ul class="nav side-menu">
+                                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="/LeadManagement/receptionist/add">Add New Leads</a>
+                                        </li>
+                                        <li><a href="#">Bulk Entry</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                    Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                    Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                    Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                    Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here
+                    Side bar ends here Side bar ends here Side bar ends here Side bar ends here Side bar ends here -->
+
+
+                    <!-- /menu footer buttons -->
+
+                    <!-- /menu footer buttons -->
                 </div>
             </div>
 
-            <div class="pull-right" class="col-md-3">
-                <img src="/LeadManagement/resources/images/logo.jpg" height="150px" width="160px">
-            </div>
+            <!-- top navigation -->
+            <!-- /top navigation -->
+            <!-- top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation -->
+
+            <%@include file="../navigation.jsp" %>
+
+            <!-- /top navigation -->
+            <!-- top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation
+            top navigation top navigation top navigation top navigation top navigation -->
 
 
-            <div class="container">
-            </div>
 
-        </div>
+            <!-- page content -->
+            <!-- main form main form main form main form main form main form main form
+            main form main form main form main form main form main form main form
+            main form main form main form main form main form main form main form
+            main form main form main form main form main form main form main form
+            main form main form main form main form main form main form main form
+            main form main form main form main form main form main form main form
+            main form main form main form main form main form main form main form -->
 
-    </body>
-</html>
+            <div class="right_col" role="main">
+
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+                            <h3></h3>
+                        </div>
+
+                        <div class="title_right">
+                            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+
+                                    <!-- admin page header admin page header admin page header admin page header admin page header admin page header
+                                    admin page header admin page header admin page header admin page header admin page header admin page header
+                                    admin page header admin page header admin page header admin page header admin page header admin page header
+                                    admin page header admin page header admin page header admin page header admin page header admin page header
+                                    admin page header admin page header admin page header admin page header admin page header admin page header
+                                    admin page header admin page header admin page header admin page header admin page header admin page header
+                                    admin page header admin page header admin page header admin page header admin page header admin page header -->
+
+                                    
+                                    <h2>Adding New Leads</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+
+                                    <form class="form-horizontal form-label-left" novalidate method="POST" enctype="multipart/form-data" action="/LeadManagement/receptionist/bulkUpload">
+
+                                        <!-- add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                            add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                            add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                            add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                            add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                            add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header
+                                            add new staffs header add new staffs header add new staffs header add new staffs header add new staffs header -->
+
+
+
+                                        <span class="section">Bulk Entry</span>
+
+                                        <div class="item form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Choose File: <br>(File format: .csv) <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <input type="file" name="bulk_file">
+
+                                            </div>
+                                        </div>
+
+
+                                    ${message}
+                                    ${details}
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-md-offset-3">
+                                                <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                                <button type="reset" class="btn btn-primary">Cancel</button>
+                                            </div>
+                                        </div>
+                                        <!-- form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                        form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                        form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                        form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                        form ends here form ends here form ends here form ends here form ends here form ends here form ends here 
+                                        form ends here form ends here form ends here form ends here form ends here form ends here form ends here  -->
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- footer content -->
+                <!-- footer content footer content footer contentfooter contentfooter content footer content footer content
+                footer content footer content footer contentfooter contentfooter content footer content footer content
+                footer content footer content footer contentfooter contentfooter content footer content footer content
+                footer content footer content footer contentfooter contentfooter content footer content footer content
+                footer content footer content footer contentfooter contentfooter content footer content footer contentfooter
+                footer content footer content footer contentfooter contentfooter content footer content footer content--> 
+                <%@include file="../footer.jsp" %>

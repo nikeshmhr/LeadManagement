@@ -82,7 +82,7 @@
             }
 
             input[type=submit] {
-                background-color: blue;
+                background-color: #49486E;
                 color: white;
                 width: 280px;
                 margin: 4px 15px 0px 19px;
@@ -92,8 +92,8 @@
 
             input[type=submit]:hover {
                 cursor: pointer;
-                background-color: #FFF;
-                color: #000;
+                background-color: #9392B2;
+                color: #FFF;
             }
         </style>
 

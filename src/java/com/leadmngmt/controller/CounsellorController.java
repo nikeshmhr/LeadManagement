@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -104,6 +105,51 @@ public class CounsellorController {
         return "/counsellor/lead_details";
     }
 
+    @RequestMapping(value = "/counsellor/notification", method = RequestMethod.POST)
+    public @ResponseBody
+    String checkForNewLeads(ModelMap map, HttpServletRequest req) {
+        String count = "0";
+        try {
+
+            SessionInfo info = new SessionInfo();
+            info.redirectPage(req); // sets the user email, user role and returns the page to go but we dont need page so no need to store return value
+            String id = info.getId();   // we only needed the id.
+
+            Counsellor c = new Counsellor();
+            c.setId(id);
+            count = c.getNoOfNewLeads() + "";
+        } catch (SQLException ex) {
+
+        } catch (ClassNotFoundException ex) {
+
+        }
+        return count;
+    }
+
+    @RequestMapping(value = "/counsellor/notfication/followup", method = RequestMethod.POST)
+    public @ResponseBody
+    String checkForNewFollowUpCountsToday(ModelMap map, HttpServletRequest req) {
+        String count = "0";
+        try {
+            SessionInfo info = new SessionInfo();
+            info.redirectPage(req);
+            String id = info.getId();
+
+            Counsellor c = new Counsellor();
+            c.setId(id);
+            count = c.getNoOfLeadsToFollowupToday() + "";
+
+        } catch (ClassNotFoundException ex) {
+            count = "Sorry, driver error.";
+        } catch (SQLException ex) {
+            count = "Sorry SQL error.";
+        } catch (ParseException ex) {
+            count = "Sorry, parse exception.";
+        }
+        return count;
+
+    }
+
     @RequestMapping(value = "/counsellor/lead/followupToday", method = RequestMethod.GET)
     public String displayLeadsToFollowUpToday(ModelMap map, HttpServletRequest req) {
         setLeadsForToday(map, req);
@@ -157,7 +203,7 @@ public class CounsellorController {
 
             int status = l.sendLeadForAdmission();
 
-            if(status > 0){
+            if (status > 0) {
                 map.addAttribute("message", "Lead successfully sent for admission.");
             }
         } catch (ClassNotFoundException ex) {

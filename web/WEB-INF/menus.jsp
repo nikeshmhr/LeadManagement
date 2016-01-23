@@ -1,9 +1,3 @@
-<%-- 
-    Document   : menus
-    Created on : Jan 14, 2016, 3:57:59 PM
-    Author     : Nikesh
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>

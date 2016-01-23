@@ -3,6 +3,7 @@ package com.leadmngmt.model;
 import com.leadmngmt.util.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -140,6 +141,22 @@ public class Staff {
         rowsAdded = statement.executeUpdate();
 
         return rowsAdded;
+    }
+    
+    public String getNameForId() throws SQLException, ClassNotFoundException {
+        String name = "";
+
+        Connection c = Database.getConnection();
+        PreparedStatement s = c.prepareStatement("SELECT name FROM staff_info WHERE id=?");
+        s.setString(1, getId());
+        ResultSet rs = s.executeQuery();
+        while (rs.next()) {
+            name = rs.getString("name");
+            setName(name);
+            break;
+        }
+
+        return name;
     }
 
     public boolean changePassword(String pwd) throws ClassNotFoundException, SQLException {

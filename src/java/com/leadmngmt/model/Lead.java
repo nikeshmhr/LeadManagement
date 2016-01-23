@@ -176,6 +176,7 @@ public class Lead {
         s.setInt(7, getFollowupCount());
         s.setString(8, getSemester());
         //System.out.println("BEFORE METHOD CALL");
+        
         String counsellorId = getCounsellorId();
         //System.out.println("AFTER METHOD CALL");
         //System.out.println(counsellorId);
@@ -335,7 +336,7 @@ public class Lead {
 
     public int sendLeadForAdmission() throws ClassNotFoundException, SQLException {
         int row = 0;
-        
+
         this.setStatus(new Status(Status.PENDING));
 
         Connection c = Database.getConnection();
@@ -346,5 +347,18 @@ public class Lead {
         row = st.executeUpdate();
 
         return row;
+    }
+
+    public int admitLead() throws SQLException, ClassNotFoundException {
+        int rows = 0;
+        
+        Connection c = Database.getConnection();
+        PreparedStatement st = c.prepareStatement("UPDATE lead_info SET student_status_id=? WHERE id=?");
+        st.setInt(1, this.getStatus().getStatusId());
+        st.setInt(2, this.getId());
+        
+        rows = st.executeUpdate();
+        
+        return rows;
     }
 }
